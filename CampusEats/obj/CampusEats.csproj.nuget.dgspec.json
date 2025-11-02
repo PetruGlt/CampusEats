@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj": {}
+    "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj": {}
   },
   "projects": {
-    "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj": {
+    "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
+        "projectUniqueName": "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj",
         "projectName": "CampusEats",
-        "projectPath": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
-        "packagesPath": "/home/petru/.nuget/packages/",
-        "outputPath": "/home/petru/RiderProjects/CampusEats/CampusEats/obj/",
+        "projectPath": "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj",
+        "packagesPath": "C:\\Users\\Paul\\.nuget\\packages\\",
+        "outputPath": "D:\\facultate\\.net\\Project\\CampusEats\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/petru/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Paul\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -78,6 +78,10 @@
               "target": "Package",
               "version": "[9.0.10, )"
             },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[49.1.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[9.0.6, )"
@@ -102,7 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/petru/.dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,15 +1,21 @@
 using CampusEats.Features.Menu;
+using CampusEats.Features.Payment;
 using CampusEats.Mappings;
 using CampusEats.Middleware;
 using CampusEats.Persistence;
 using CampusEats.Validators;
+using Stripe;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Stripe
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+builder.Services.AddScoped<IStripeClient>(sp => new StripeClient(builder.Configuration["Stripe:SecretKey"]));
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc(
@@ -41,6 +47,9 @@ builder.Services.AddScoped<GetAllMenuItemsHandler>();
 builder.Services.AddScoped<GetByIdMenuItemHandler>();
 builder.Services.AddScoped<UpdateMenuItemHandler>();
 builder.Services.AddScoped<DeleteMenuItemHandler>();
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+builder.Services.AddScoped<IStripeClient>(sp => new StripeClient(builder.Configuration["Stripe:SecretKey"]));
+builder.Services.AddScoped<PaymentHandler>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateMenuItemValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateMenuItemValidator>();
@@ -100,5 +109,10 @@ app.MapDelete("/menu/{id:guid}", async (Guid id, DeleteMenuItemHandler handler) 
     await handler.Handle(new DeleteMenuItemRequest(id)));
 
 
+app.MapPost("/payment", async (PaymentRequest request, PaymentHandler handler) =>
+{
+    var paymentIntentId = await handler.CreateCheckoutSession(request);
+    return Results.Ok(new { PaymentIntentId = paymentIntentId });
+});
 
 app.Run();
