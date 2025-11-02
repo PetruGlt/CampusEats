@@ -10,7 +10,8 @@ public class DeleteMenuItemHandler(CampusEatsContext context)
         var item = await context.MenuItems.FirstOrDefaultAsync(x => x.Id == request.Id);
         if (item == null)
         {
-            return Results.NotFound();
+            return Results.NotFound(); 
+        }
         context.MenuItems.Remove(item);
         await context.SaveChangesAsync();
         return Results.Ok();
