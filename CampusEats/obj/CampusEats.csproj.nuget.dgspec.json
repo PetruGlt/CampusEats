@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj": {}
+    "/Users/edi/Desktop/Facultate/Anul 3/Semestrul V/Introducere in .NET/CampusEats/CampusEats/CampusEats.csproj": {}
   },
   "projects": {
-    "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj": {
+    "/Users/edi/Desktop/Facultate/Anul 3/Semestrul V/Introducere in .NET/CampusEats/CampusEats/CampusEats.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj",
+        "projectUniqueName": "/Users/edi/Desktop/Facultate/Anul 3/Semestrul V/Introducere in .NET/CampusEats/CampusEats/CampusEats.csproj",
         "projectName": "CampusEats",
-        "projectPath": "D:\\facultate\\.net\\Project\\CampusEats\\CampusEats.csproj",
-        "packagesPath": "C:\\Users\\Paul\\.nuget\\packages\\",
-        "outputPath": "D:\\facultate\\.net\\Project\\CampusEats\\obj\\",
+        "projectPath": "/Users/edi/Desktop/Facultate/Anul 3/Semestrul V/Introducere in .NET/CampusEats/CampusEats/CampusEats.csproj",
+        "packagesPath": "/Users/edi/.nuget/packages/",
+        "outputPath": "/Users/edi/Desktop/Facultate/Anul 3/Semestrul V/Introducere in .NET/CampusEats/CampusEats/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Paul\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/edi/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -59,6 +59,10 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[12.0.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.3.0, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -106,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
