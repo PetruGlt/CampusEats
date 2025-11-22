@@ -1,0 +1,195 @@
+### CampusEats API Testing - Orders & Kitchen Features
+
+@baseUrl = http://localhost:5168
+
+### ===============================
+### MENU ENDPOINTS (for reference)
+### ===============================
+
+### Create Menu Item - Burger
+POST {{baseUrl}}/menu
+Content-Type: application/json
+
+{
+  "name": "Burger",
+  "price": 8.99
+}
+
+### Create Menu Item - Pizza
+POST {{baseUrl}}/menu
+Content-Type: application/json
+
+{
+  "name": "Pizza",
+  "price": 12.50
+}
+
+### Create Menu Item - Salad
+POST {{baseUrl}}/menu
+Content-Type: application/json
+
+{
+  "name": "Salad",
+  "price": 6.99
+}
+
+### Get All Menu Items
+GET {{baseUrl}}/menu
+
+### ===============================
+### ORDER ENDPOINTS (Week 3)
+### ===============================
+
+### Create Order
+# Note: Replace menuItemId values with actual IDs from menu items created above
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "userId": "user123",
+  "items": [
+    {
+      "menuItemId": "00000000-0000-0000-0000-000000000000",
+      "quantity": 2,
+      "specialInstructions": "No onions please"
+    },
+    {
+      "menuItemId": "00000000-0000-0000-0000-000000000000",
+      "quantity": 1,
+      "specialInstructions": "Extra cheese"
+    }
+  ],
+  "notes": "Deliver to Room 301"
+}
+
+### Get All Orders
+GET {{baseUrl}}/orders
+
+### Get Orders by User ID
+GET {{baseUrl}}/orders?userId=user123
+
+### Get Order by ID
+# Note: Replace with actual order ID from create order response
+GET {{baseUrl}}/orders/00000000-0000-0000-0000-000000000000
+
+### Cancel Order
+# Note: Replace with actual order ID
+PUT {{baseUrl}}/orders/00000000-0000-0000-0000-000000000000/cancel
+
+### ===============================
+### KITCHEN ENDPOINTS (Week 3)
+### ===============================
+
+### Get Pending Orders (for kitchen view)
+GET {{baseUrl}}/kitchen/orders
+
+### Update Order Status to Preparing
+# Note: Replace with actual order ID
+PUT {{baseUrl}}/kitchen/orders/00000000-0000-0000-0000-000000000000/status
+Content-Type: application/json
+
+{
+  "status": "Preparing"
+}
+
+### Update Order Status to Ready
+# Note: Replace with actual order ID
+PUT {{baseUrl}}/kitchen/orders/00000000-0000-0000-0000-000000000000/status
+Content-Type: application/json
+
+{
+  "status": "Ready"
+}
+
+### Update Order Status to Completed
+# Note: Replace with actual order ID
+PUT {{baseUrl}}/kitchen/orders/00000000-0000-0000-0000-000000000000/status
+Content-Type: application/json
+
+{
+  "status": "Completed"
+}
+
+### ===============================
+### ERROR CASES - Testing Validation
+### ===============================
+
+### Invalid Order - Empty Items
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "userId": "user123",
+  "items": [],
+  "notes": "This should fail"
+}
+
+### Invalid Order - Missing UserId
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "userId": "",
+  "items": [
+    {
+      "menuItemId": "00000000-0000-0000-0000-000000000000",
+      "quantity": 1
+    }
+  ]
+}
+
+### Invalid Order - Quantity <= 0
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "userId": "user123",
+  "items": [
+    {
+      "menuItemId": "00000000-0000-0000-0000-000000000000",
+      "quantity": 0
+    }
+  ]
+}
+
+### Invalid Status Transition
+# Try to update a Completed order (should fail)
+PUT {{baseUrl}}/kitchen/orders/00000000-0000-0000-0000-000000000000/status
+Content-Type: application/json
+
+{
+  "status": "Preparing"
+}
+
+### Invalid Status Value
+PUT {{baseUrl}}/kitchen/orders/00000000-0000-0000-0000-000000000000/status
+Content-Type: application/json
+
+{
+  "status": "InvalidStatus"
+}
+
+### ===============================
+### WORKFLOW TEST SCENARIO
+### ===============================
+
+### Step 1: Create menu items
+# (Use the menu endpoints above first)
+
+### Step 2: Customer creates an order
+# POST {{baseUrl}}/orders
+
+### Step 3: Kitchen views pending orders
+# GET {{baseUrl}}/kitchen/orders
+
+### Step 4: Kitchen starts preparing
+# PUT {{baseUrl}}/kitchen/orders/{id}/status - status: "Preparing"
+
+### Step 5: Kitchen marks as ready
+# PUT {{baseUrl}}/kitchen/orders/{id}/status - status: "Ready"
+
+### Step 6: Customer picks up (marks completed)
+# PUT {{baseUrl}}/kitchen/orders/{id}/status - status: "Completed"
+
+### Alternative Step: Customer cancels before preparing
+# PUT {{baseUrl}}/orders/{id}/cancel
