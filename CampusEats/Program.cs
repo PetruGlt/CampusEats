@@ -2,16 +2,17 @@ using CampusEats.Data;
 using CampusEats.Features.Menu;
 using CampusEats.Features.Orders;
 using CampusEats.Features.Kitchen;
+using CampusEats.Features.Loyalty;
 using CampusEats.Features.Payment;
 using CampusEats.Mappings;
 using CampusEats.Middleware;
 using CampusEats.Persistence;
 using CampusEats.Validators;
-using Stripe;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,9 +70,13 @@ builder.Services.AddScoped<BulkUpdateOrderStatusHandler>();
 builder.Services.AddScoped<GetPopularItemsHandler>();
 
 // Register Payment handlers
-StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
-builder.Services.AddScoped<IStripeClient>(sp => new StripeClient(builder.Configuration["Stripe:SecretKey"]));
-builder.Services.AddScoped<PaymentHandler>();
+builder.Services.AddScoped<CreatePaymentHandler>();
+builder.Services.AddScoped<GetPaymentHistoryHandler>();
+builder.Services.AddScoped<GetPaymentByIdHandler>();
+
+// Register Loyalty services
+builder.Services.AddScoped<LoyaltyService>();
+builder.Services.AddScoped<GetUserPointsHandler>();
 
 // Register validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreateMenuItemValidator>();
@@ -275,13 +280,82 @@ app.MapGet("/kitchen/popular-items", async (int? topN, GetPopularItemsHandler ha
     .WithOpenApi();
 
 // Payment endpoints
-app.MapPost("/payment", async (PaymentRequest request, PaymentHandler handler) =>
+app.MapPost("/payments/create-checkout", async (CreatePaymentRequest request, CreatePaymentHandler handler) =>
 {
-    var paymentIntentId = await handler.CreateCheckoutSession(request);
-    return Results.Ok(new { PaymentIntentId = paymentIntentId });
+    var result = await handler.Handle(request);
+    return Results.Ok(result);
 })
     .WithTags("Payment")
-    .WithName("CreatePayment")
+    .WithName("CreateCheckoutSession")
+    .WithOpenApi();
+
+app.MapGet("/payments/history", async (string? userId, DateTime? startDate, DateTime? endDate, string? status, GetPaymentHistoryHandler handler) =>
+{
+    PaymentStatus? paymentStatus = null;
+    if (!string.IsNullOrEmpty(status) && Enum.TryParse<PaymentStatus>(status, true, out var parsedStatus))
+    {
+        paymentStatus = parsedStatus;
+    }
+    
+    var request = new GetPaymentHistoryRequest(userId, startDate, endDate, paymentStatus);
+    var result = await handler.Handle(request);
+    return Results.Ok(result);
+})
+    .WithTags("Payment")
+    .WithName("GetPaymentHistory")
+    .WithOpenApi();
+
+app.MapGet("/payments/{id:guid}", async (Guid id, GetPaymentByIdHandler handler) =>
+{
+    var result = await handler.Handle(new GetPaymentByIdRequest(id));
+    return Results.Ok(result);
+})
+    .WithTags("Payment")
+    .WithName("GetPaymentById")
+    .WithOpenApi();
+
+// TEMPORARY TEST ENDPOINT - Simulate successful payment
+app.MapPost("/payments/{id:guid}/test-complete", async (Guid id, CampusEatsContext context, LoyaltyService loyaltyService) =>
+{
+    var payment = await context.Payments.FindAsync(id);
+    if (payment == null)
+        return Results.NotFound(new { message = "Payment not found" });
+
+    payment.Status = PaymentStatus.Succeeded;
+    payment.CompletedAt = DateTime.UtcNow;
+    
+    // Update order status
+    var order = await context.Orders.FindAsync(payment.OrderId);
+    if (order != null && order.Status == OrderStatus.Pending)
+    {
+        order.Status = OrderStatus.Preparing;
+        order.UpdatedAt = DateTime.UtcNow;
+        
+        await loyaltyService.AddPointsForOrder(order.UserId, order.TotalAmount);
+    }
+
+    await context.SaveChangesAsync();
+    
+    return Results.Ok(new 
+    { 
+        message = "Payment marked as succeeded", 
+        paymentId = payment.Id, 
+        orderId = payment.OrderId,
+        pointsEarned = (int)((order?.TotalAmount ?? 0) * 10)
+    });
+})
+    .WithTags("Payment - Testing")
+    .WithName("TestCompletePayment")
+    .WithOpenApi();
+
+// Loyalty endpoint
+app.MapGet("/loyalty/{userId}", async (string userId, GetUserPointsHandler handler) =>
+{
+    var result = await handler.Handle(new GetUserPointsRequest(userId));
+    return Results.Ok(result);
+})
+    .WithTags("Loyalty")
+    .WithName("GetUserLoyaltyPoints")
     .WithOpenApi();
 
 app.Run();
