@@ -1,62 +1,12 @@
 @page "/menu"
+<h3>Today's Specialty</h3>
 
-<PageTitle>CampusEats - Menu</PageTitle>
-
-<MudGrid>
-    <MudItem xs="12">
-        <MudText Typo="Typo.h4" GutterBottom="true">Our Menu</MudText>
-        
-        <!-- Filters -->
-        <MudGrid Class="mb-4">
-            <MudItem xs="12" sm="6" md="3">
-                @*<MudSelect @bind-Value="SelectedCategory" Label="Category" Variant="Variant.Outlined">
-                    <MudSelectItem Value="">All</MudSelectItem>
-                    @foreach (var category in Categories)
-                    {
-                        <MudSelectItem Value="@category">@category</MudSelectItem>
-                    }
-                </MudSelect>*@
-            </MudItem>
-        </MudGrid>
-
-        <!-- Menu Items Grid -->
-        <MudGrid>
-            @*@foreach (var item in FilteredMenuItems)
-            {
-                <MudItem xs="12" sm="6" md="4">
-                    <MudCard Class="h-100">
-                        <MudCardContent>
-                            <MudImage Src="@item.ImageUrl" Height="200px" />
-                            <MudText Typo="Typo.h6" Class="mt-2">@item.Name</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.TextSecondary">@item.Description</MudText>
-                            <MudChipSet Class="my-2">
-                                @if (item.IsVegetarian)
-                                {
-                                    <MudChip Color="Color.Success" Size="Size.Small">Vegetarian</MudChip>
-                                }
-                                @foreach (var allergen in item.Allergens)
-                                {
-                                    <MudChip Color="Color.Warning" Size="Size.Small">@allergen</MudChip>
-                                }
-                            </MudChipSet>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudSpacer />
-                            <MudText Typo="Typo.h6" Color="Color.Primary">$@item.Price</MudText>
-                            $1$<MudButton 
-                                Variant="Variant.Filled" 
-                                Color="Color.Primary" 
-                                OnClick="@(() => AddToCart(item))"
-                                StartIcon="Icons.Material.Filled.Add">
-                                Add to Cart
-                            </MudButton>#1#
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
-            }*@
-        </MudGrid>
-    </MudItem>
-</MudGrid>
+<div class="Container">
+    <ul>
+        <li>Burghir</li>
+        <li>Pizzah</li>
+    </ul>
+</div>
 
 @code {
     
