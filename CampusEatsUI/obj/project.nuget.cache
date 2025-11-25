@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/3919LhclgU=",
+  "dgSpecHash": "ItFxGK8L0f0=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/CampusEats/CampusEatsUI/CampusEatsUI.csproj",
   "expectedPackageFiles": [
@@ -33,12 +33,14 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.primitives/9.0.11/microsoft.extensions.primitives.9.0.11.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.jsinterop/9.0.11/microsoft.jsinterop.9.0.11.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.jsinterop.webassembly/9.0.9/microsoft.jsinterop.webassembly.9.0.9.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.net.illink.tasks/9.0.9/microsoft.net.illink.tasks.9.0.9.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.net.sdk.webassembly.pack/9.0.9/microsoft.net.sdk.webassembly.pack.9.0.9.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.net.illink.tasks/9.0.11/microsoft.net.illink.tasks.9.0.11.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.net.sdk.webassembly.pack/10.0.0/microsoft.net.sdk.webassembly.pack.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/mudblazor/8.14.0/mudblazor.8.14.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/mudblazor.markdown/8.11.0/mudblazor.markdown.8.11.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/mudblazor.thememanager/3.0.0/mudblazor.thememanager.3.0.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.app.runtime.mono.browser-wasm/9.0.9/microsoft.netcore.app.runtime.mono.browser-wasm.9.0.9.nupkg.sha512"
+    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.app.ref/9.0.11/microsoft.netcore.app.ref.9.0.11.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.app.runtime.mono.browser-wasm/9.0.11/microsoft.netcore.app.runtime.mono.browser-wasm.9.0.11.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.11/microsoft.aspnetcore.app.ref.9.0.11.nupkg.sha512"
   ],
   "logs": []
 }

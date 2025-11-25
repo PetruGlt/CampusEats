@@ -1,5 +1,7 @@
+using CampusEats.Features.Loyalty;
 using CampusEats.Features.Menu;
 using CampusEats.Features.Orders;
+using CampusEats.Features.Payment;
 using Microsoft.EntityFrameworkCore;
 
 namespace CampusEats.Persistence;
@@ -9,6 +11,8 @@ public class CampusEatsContext(DbContextOptions<CampusEatsContext> options) : Db
     public DbSet<MenuItem> MenuItems { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Payment> Payments { get; set; }
+    public DbSet<UserLoyalty> UserLoyalties { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,6 +39,26 @@ public class CampusEatsContext(DbContextOptions<CampusEatsContext> options) : Db
             entity.HasKey(oi => oi.Id);
             entity.Property(oi => oi.MenuItemName).IsRequired();
             entity.Property(oi => oi.Price).HasPrecision(18, 2);
+        });
+
+        // Configure Payment entity
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.HasKey(p => p.Id);
+            entity.Property(p => p.Status).HasConversion<string>();
+            entity.Property(p => p.UserId).IsRequired();
+            entity.Property(p => p.StripeSessionId).IsRequired();
+            entity.HasIndex(p => p.StripeSessionId);
+            entity.HasIndex(p => p.StripePaymentIntentId);
+            entity.HasIndex(p => p.OrderId);
+        });
+
+        // Configure UserLoyalty entity
+        modelBuilder.Entity<UserLoyalty>(entity =>
+        {
+            entity.HasKey(ul => ul.Id);
+            entity.Property(ul => ul.UserId).IsRequired();
+            entity.HasIndex(ul => ul.UserId).IsUnique();
         });
     }
 }
