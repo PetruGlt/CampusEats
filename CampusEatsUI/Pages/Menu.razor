@@ -1,13 +1,50 @@
 @page "/menu"
+@using CampusEatsUI.Models
+@using System.Net.Http.Json
+@inject HttpClient Http
 <h3>Today's Specialty</h3>
 
-<div class="Container">
-    <ul>
-        <li>Burghir</li>
-        <li>Pizzah</li>
-    </ul>
+<div class="menu-grid">
+    @if (MenuItems is not null)
+    {
+        @foreach (var item in MenuItems)
+        {
+            <article class="menu-item">
+                <div class="menu-item-body">
+                    <h4>@item.Name</h4>
+                    <p>@item.Price.ToString("C")</p>
+                    <button class="btn btn-primary">Add to checkout</button>
+                </div>
+            </article>
+        }    
+    }else{
+        <p>Loading...</p>
+    }
+    
 </div>
 
+
 @code {
-    
+    private List<MenuItem> MenuItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetMenuItemsAsync();
+    }
+
+    private async Task GetMenuItemsAsync()
+    {
+        try
+        {
+            var items = await Http.GetFromJsonAsync<List<MenuItem>>("http://localhost:5168/menu");
+            if (items is not null)
+            {
+                MenuItems = items;
+            }
+        }
+        catch
+        {
+            MenuItems = null;
+        }
+    }
 }
