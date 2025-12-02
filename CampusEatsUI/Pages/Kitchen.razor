@@ -1,0 +1,97 @@
+@page "/kitchen"
+@using CampusEatsUI.Models.DTOs
+@inject HttpClient Http
+
+<h3>Kitchen Display System</h3>
+
+<div class="mb-3">
+    <button class="btn btn-primary" @onclick="LoadKitchenData">Refresh</button>
+</div>
+
+@if (dashboard != null)
+{
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pending</h5>
+                    <p class="card-text display-4">@dashboard.PendingOrdersCount</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Preparing</h5>
+                    <p class="card-text display-4">@dashboard.PreparingOrdersCount</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Completed</h5>
+                    <p class="card-text display-4">@dashboard.CompletedOrdersCount</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<h4>Pending & Active Orders</h4>
+<div class="row">
+    @if (pendingOrders != null)
+    {
+        @foreach (var order in pendingOrders)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Order #@order.Id.ToString().Substring(0,6)</span>
+                        <span class="badge bg-dark">@order.Status</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            @foreach (var item in order.Items)
+                            {
+                                <li><strong>@item.Quantity x</strong> @item.MenuItemName</li>
+                            }
+                        </ul>
+                        <hr/>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" @onclick='() => UpdateStatus(order.Id, "Preparing")'>Mark Preparing</button>
+                            <button class="btn btn-outline-success btn-sm" @onclick='() => UpdateStatus(order.Id, "Ready")'>Mark Ready</button>
+                            <button class="btn btn-outline-secondary btn-sm" @onclick='() => UpdateStatus(order.Id, "Delivered")'>Mark Delivered</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+@code {
+    private List<OrderDto>? pendingOrders;
+    private KitchenDashboardDto? dashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadKitchenData();
+    }
+
+    private async Task LoadKitchenData()
+    {
+        try
+        {
+            pendingOrders = await Http.GetFromJsonAsync<List<OrderDto>>("http://localhost:5168/kitchen/orders");
+            dashboard = await Http.GetFromJsonAsync<KitchenDashboardDto>("http://localhost:5168/kitchen/dashboard");
+        }
+        catch (Exception ex) { Console.WriteLine(ex); }
+    }
+
+    private async Task UpdateStatus(Guid orderId, string status)
+    {
+        var request = new UpdateOrderStatusRequestBody(status);
+        await Http.PutAsJsonAsync($"http://localhost:5168/kitchen/orders/{orderId}/status", request);
+        await LoadKitchenData();
+    }
+}

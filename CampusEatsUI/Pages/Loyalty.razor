@@ -1,10 +1,41 @@
 @page "/loyalty"
-<h3>Special Offers</h3>
+@using CampusEatsUI.Models.DTOs
+@inject HttpClient Http
 
-<div>
-    <p>Coming soon!</p>
+<h3>Loyalty Program</h3>
+
+<div class="card text-center w-50 mx-auto mt-5">
+    <div class="card-header">
+        Check Your Points
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Enter your User ID</h5>
+        <input @bind="userId" class="form-control mb-3" placeholder="e.g. user123" />
+        <button class="btn btn-primary" @onclick="CheckPoints">Check Points</button>
+        
+        @if (points.HasValue)
+        {
+            <div class="mt-4">
+                <h1 class="display-1 text-warning">@points</h1>
+                <p class="lead">Points Available</p>
+            </div>
+        }
+    </div>
 </div>
-
 @code {
-    
+    private string userId = "user123";
+    private int? points;
+
+    private async Task CheckPoints()
+    {
+        try
+        {
+            var result = await Http.GetFromJsonAsync<UserPointsDto>($"http://localhost:5168/loyalty/{userId}");
+            points = result?.Points;
+        }
+        catch 
+        {
+            points = 0;
+        }
+    }
 }

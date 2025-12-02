@@ -3,7 +3,7 @@ namespace CampusEatsUI.Models;
 public class Orders
 {
     public Guid Id { get; set; }
-    public string UserId { get; set; } = string.Empty;
+    public Guid UserId { get; set; }
     public string Status { get; set; } = string.Empty;
     public decimal TotalAmount { get; set; }
     public DateTime CreatedAt { get; set; }
