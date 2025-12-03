@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5OIDg0v7TyI=",
+  "dgSpecHash": "QX1ewwEag9Y=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,7 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.abstractions/9.0.10/microsoft.entityframeworkcore.abstractions.9.0.10.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.analyzers/9.0.10/microsoft.entityframeworkcore.analyzers.9.0.10.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.design/9.0.10/microsoft.entityframeworkcore.design.9.0.10.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.inmemory/9.0.10/microsoft.entityframeworkcore.inmemory.9.0.10.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.relational/9.0.10/microsoft.entityframeworkcore.relational.9.0.10.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.sqlite/9.0.10/microsoft.entityframeworkcore.sqlite.9.0.10.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.sqlite.core/9.0.10/microsoft.entityframeworkcore.sqlite.core.9.0.10.nupkg.sha512",

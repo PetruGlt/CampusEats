@@ -836,3 +836,4 @@ D:/facultate/.net/Project/CampusEats/bin/Debug/net9.0/System.Security.Cryptograp
 /home/mrbogdanovich/git/CampusEats/CampusEats/obj/Debug/net9.0/CampusEats.genruntimeconfig.cache
 /home/mrbogdanovich/git/CampusEats/CampusEats/obj/Debug/net9.0/ref/CampusEats.dll
 /home/mrbogdanovich/git/CampusEats/CampusEats/obj/Debug/net9.0/swae.build.ex.cache
+/home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.InMemory.dll
