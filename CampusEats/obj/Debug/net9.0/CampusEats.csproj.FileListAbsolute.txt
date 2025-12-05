@@ -726,7 +726,6 @@ D:/facultate/.net/Project/CampusEats/bin/Debug/net9.0/System.Security.Cryptograp
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/System.Composition.TypedParts.dll
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/System.Configuration.ConfigurationManager.dll
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/System.Security.Cryptography.ProtectedData.dll
-/home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/System.Text.Json.dll
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
@@ -836,3 +835,5 @@ D:/facultate/.net/Project/CampusEats/bin/Debug/net9.0/System.Security.Cryptograp
 /home/mrbogdanovich/git/CampusEats/CampusEats/obj/Debug/net9.0/CampusEats.pdb
 /home/mrbogdanovich/git/CampusEats/CampusEats/obj/Debug/net9.0/CampusEats.genruntimeconfig.cache
 /home/mrbogdanovich/git/CampusEats/CampusEats/obj/Debug/net9.0/ref/CampusEats.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats/obj/Debug/net9.0/swae.build.ex.cache
+/home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.InMemory.dll

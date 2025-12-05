@@ -1,49 +1,120 @@
 @page "/orders"
+@using CampusEatsUI.Models.DTOs
+@inject HttpClient Http
 
-<PageTitle>CampusEats - My Orders</PageTitle>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="input-group">
+            <input @bind="searchQuery" class="form-control" placeholder="Search orders..." />
+            <button class="btn btn-outline-secondary" @onclick="SearchOrders">Search</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-info" @onclick="GetStatistics">Load Statistics</button>
+    </div>
+</div>
 
-<MudTabs>
-    <MudTab Text="Current Orders">
-        @*<MudTable Items="@CurrentOrders" Hover="true" Breakpoint="Breakpoint.Sm">
-            <HeaderContent>
-                <MudTh>Order #</MudTh>
-                <MudTh>Items</MudTh>
-                <MudTh>Total</MudTh>
-                <MudTh>Status</MudTh>
-                <MudTh>Actions</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                $1$<MudTd>@context.OrderNumber</MudTd>
-                <MudTd>@context.Items.Count items</MudTd>
-                <MudTd>$@context.TotalAmount</MudTd>
-                <MudTd>
-                    <MudChip Color="@GetStatusColor(context.Status)" Size="Size.Small">
-                        @context.Status
-                    </MudChip>
-                </MudTd>#1#
-                $1$<MudTd>
-                    @if (context.Status == OrderStatus.Pending)
-                    {
-                        <MudButton 
-                            Variant="Variant.Text" 
-                            Color="Color.Error" 
-                            Size="Size.Small"
-                            OnClick="@(() => CancelOrder(context.Id))">
-                            Cancel
-                        </MudButton>
-                    }
-                </MudTd>#1#
-            </RowTemplate>
-        </MudTable>*@
-    </MudTab>
-    
-    <MudTab Text="Order History">
-        @*<MudTable Items="@OrderHistory" Hover="true">
-            <!-- Similar structure for history -->
-        </MudTable>*@
-    </MudTab>
-</MudTabs>
+@if (stats != null)
+{
+    <div class="alert alert-info">
+        <strong>Statistics:</strong> Total Orders: @stats.TotalOrders | Revenue: @stats.TotalRevenue.ToString("C") | Popular: @stats.MostPopularItem
+    </div>
+}
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (orders != null)
+        {
+            @foreach (var order in orders)
+            {
+                <tr>
+                    <td>@order.Id.ToString().Substring(0, 8)...</td>
+                    <td>@order.UserId</td>
+                    <td><span class="badge bg-primary">@order.Status</span></td>
+                    <td>@order.TotalAmount.ToString("C")</td>
+                    <td>@order.CreatedAt.ToShortTimeString()</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" @onclick="() => CancelOrder(order.Id)">Cancel</button>
+                        <button class="btn btn-sm btn-success" @onclick="() => CheckWaitTime(order.Id)">Wait Time</button>
+                        <button class="btn btn-sm btn-secondary" @onclick="() => ViewDetails(order.Id)">Details</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (waitTimeMessage != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @waitTimeMessage
+        <button type="button" class="btn-close" @onclick="() => waitTimeMessage = null"></button>
+    </div>
+}
 @code {
+    private List<OrderDto>? orders;
+    private OrderStatisticsDto? stats;
+    private string searchQuery = "";
+    private string? waitTimeMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadOrders();
+    }
+
+    private async Task LoadOrders()
+    {
+        // Using a generic search/list endpoint or specifically GetAllOrders
+        try
+        {
+            // Default to getting all orders (userId = null)
+            orders = await Http.GetFromJsonAsync<List<OrderDto>>("http://localhost:5168/orders");
+        }
+        catch
+        {
+            
+        }
+    }
+
+    private async Task SearchOrders()
+    {
+        try
+        {
+            // Search endpoint
+            orders = await Http.GetFromJsonAsync<List<OrderDto>>($"http://localhost:5168/orders/search?query={searchQuery}");
+        }
+        catch {}
+    }
+
+    private async Task CancelOrder(Guid id)
+    {
+        await Http.PutAsync($"http://localhost:5168/orders/{id}/cancel", null);
+        await LoadOrders();
+    }
+
+    private async Task CheckWaitTime(Guid id)
+    {
+        var time = await Http.GetStringAsync($"http://localhost:5168/orders/{id}/wait-time");
+        waitTimeMessage = $"Estimated wait time for order {id.ToString().Substring(0,4)}: {time}";
+    }
+
+    private async Task GetStatistics()
+    {
+        stats = await Http.GetFromJsonAsync<OrderStatisticsDto>("http://localhost:5168/orders/statistics");
+    }
     
+    private void ViewDetails(Guid id)
+    {
+        // Implementation for modal or redirect could go here
+    }
 }

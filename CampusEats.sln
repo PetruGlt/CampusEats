@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusEats", "CampusEats\CampusEats.csproj", "{1CC9EA5C-147E-454D-AB86-DA99B4503175}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusEatsUI", "CampusEatsUI\CampusEatsUI.csproj", "{3C4A5635-48A7-415A-AD21-ACDAC8B8AA52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusEats.Tests", "CampusEats.Tests\CampusEats.Tests.csproj", "{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{1CC9EA5C-147E-454D-AB86-DA99B4503175}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CC9EA5C-147E-454D-AB86-DA99B4503175}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CC9EA5C-147E-454D-AB86-DA99B4503175}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C4A5635-48A7-415A-AD21-ACDAC8B8AA52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C4A5635-48A7-415A-AD21-ACDAC8B8AA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C4A5635-48A7-415A-AD21-ACDAC8B8AA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C4A5635-48A7-415A-AD21-ACDAC8B8AA52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

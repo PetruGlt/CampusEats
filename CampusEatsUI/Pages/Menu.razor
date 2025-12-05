@@ -1,63 +1,179 @@
 @page "/menu"
+@using CampusEatsUI.Models
+@using System.Net.Http.Json
+@using CampusEatsUI.Models.DTOs
+@using CreateOrderRequest = CampusEatsUI.Models.DTOs.CreateOrderRequest
+@using OrderItemDto = CampusEatsUI.Models.DTOs.OrderItemDto
+@inject HttpClient Http
+@inject NavigationManager Navigation
+<h3>Today's Specialty</h3>
 
-<PageTitle>CampusEats - Menu</PageTitle>
-
-<MudGrid>
-    <MudItem xs="12">
-        <MudText Typo="Typo.h4" GutterBottom="true">Our Menu</MudText>
+<div class="row">
+    <div class="col-md-8">
+        <h4>Current Menu</h4>
         
-        <!-- Filters -->
-        <MudGrid Class="mb-4">
-            <MudItem xs="12" sm="6" md="3">
-                @*<MudSelect @bind-Value="SelectedCategory" Label="Category" Variant="Variant.Outlined">
-                    <MudSelectItem Value="">All</MudSelectItem>
-                    @foreach (var category in Categories)
-                    {
-                        <MudSelectItem Value="@category">@category</MudSelectItem>
-                    }
-                </MudSelect>*@
-            </MudItem>
-        </MudGrid>
+        @* Admin Section for Menu Management *@
+        <div class="card mb-3 p-3">
+            <h5>Manage Menu</h5>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Item Name" @bind="newItemName" />
+                <input type="number" class="form-control" placeholder="Price" @bind="newItemPrice" />
+                <button class="btn btn-success" @onclick="CreateMenuItem">Add New Item</button>
+            </div>
+        </div>
 
-        <!-- Menu Items Grid -->
-        <MudGrid>
-            @*@foreach (var item in FilteredMenuItems)
+        <div class="menu-grid">
+            @if (MenuItems is not null)
             {
-                <MudItem xs="12" sm="6" md="4">
-                    <MudCard Class="h-100">
-                        <MudCardContent>
-                            <MudImage Src="@item.ImageUrl" Height="200px" />
-                            <MudText Typo="Typo.h6" Class="mt-2">@item.Name</MudText>
-                            <MudText Typo="Typo.body2" Color="Color.TextSecondary">@item.Description</MudText>
-                            <MudChipSet Class="my-2">
-                                @if (item.IsVegetarian)
-                                {
-                                    <MudChip Color="Color.Success" Size="Size.Small">Vegetarian</MudChip>
-                                }
-                                @foreach (var allergen in item.Allergens)
-                                {
-                                    <MudChip Color="Color.Warning" Size="Size.Small">@allergen</MudChip>
-                                }
-                            </MudChipSet>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudSpacer />
-                            <MudText Typo="Typo.h6" Color="Color.Primary">$@item.Price</MudText>
-                            $1$<MudButton 
-                                Variant="Variant.Filled" 
-                                Color="Color.Primary" 
-                                OnClick="@(() => AddToCart(item))"
-                                StartIcon="Icons.Material.Filled.Add">
-                                Add to Cart
-                            </MudButton>#1#
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
-            }*@
-        </MudGrid>
-    </MudItem>
-</MudGrid>
+                @foreach (var item in MenuItems)
+                {
+                    <article class="menu-item card mb-2">
+                        <div class="card-body">
+                            @if (editingId == item.Id)
+                            {
+                                <input @bind="editName" class="form-control mb-1" />
+                                <input @bind="editPrice" type="number" class="form-control mb-1" />
+                                <button class="btn btn-sm btn-success" @onclick="() => SaveEdit(item.Id)">Save</button>
+                                <button class="btn btn-sm btn-secondary" @onclick="CancelEdit">Cancel</button>
+                            }
+                            else
+                            {
+                                <h4>@item.Name</h4>
+                                <p>@item.Price.ToString("C")</p>
+                                <button class="btn btn-primary" @onclick="() => AddToCart(item)">Add to Cart</button>
+                                <button class="btn btn-warning btn-sm" @onclick="() => StartEdit(item)">Edit</button>
+                                <button class="btn btn-danger btn-sm" @onclick="() => DeleteItem(item.Id)">Delete</button>
+                            }
+                        </div>
+                    </article>
+                }    
+            }
+            else
+            {
+                <p>Loading...</p>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <h4>Your Cart</h4>
+        @if (Cart.Any())
+        {
+            <ul class="list-group mb-3">
+                @foreach (var cartItem in Cart)
+                {
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">@cartItem.Name</h6>
+                            <small class="text-muted">Quantity: 1</small>
+                        </div>
+                        <span class="text-muted">@cartItem.Price.ToString("C")</span>
+                    </li>
+                }
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>@Cart.Sum(x => x.Price).ToString("C")</strong>
+                </li>
+            </ul>
+            <div class="mb-3">
+                <label>User ID (for testing):</label>
+                <input @bind="userId" class="form-control" />
+            </div>
+            <button class="btn btn-success w-100" @onclick="PlaceOrder">Place Order</button>
+        }
+        else
+        {
+            <p>Your cart is empty.</p>
+        }
+    </div>
+</div>
 
 @code {
+    private List<MenuItem> MenuItems = new();
+    private List<MenuItem> Cart = new();
     
+    // Create
+    private string newItemName = "";
+    private decimal newItemPrice;
+    
+    // Edit
+    private Guid? editingId = null;
+    private string editName = "";
+    private decimal editPrice;
+
+    // Order
+    private string userId = "user123"; // Default for testing
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetMenuItemsAsync();
+    }
+
+    private async Task GetMenuItemsAsync()
+    {
+        try
+        {
+            var items = await Http.GetFromJsonAsync<List<MenuItem>>("http://localhost:5168/menu");
+            if (items is not null) MenuItems = items;
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+    }
+
+    private async Task CreateMenuItem()
+    {
+        if (string.IsNullOrWhiteSpace(newItemName)) return;
+        
+        var request = new CreateMenuItemRequest(newItemName, newItemPrice);
+        await Http.PostAsJsonAsync("http://localhost:5168/menu", request);
+        
+        newItemName = "";
+        newItemPrice = 0;
+        await GetMenuItemsAsync();
+    }
+
+    private void StartEdit(MenuItem item)
+    {
+        editingId = item.Id;
+        editName = item.Name;
+        editPrice = item.Price;
+    }
+
+    private void CancelEdit() => editingId = null;
+
+    private async Task SaveEdit(Guid id)
+    {
+        var request = new UpdateMenuItemRequest(id, editName, editPrice);
+        await Http.PutAsJsonAsync($"http://localhost:5168/menu/{id}", request);
+        editingId = null;
+        await GetMenuItemsAsync();
+    }
+
+    private async Task DeleteItem(Guid id)
+    {
+        await Http.DeleteAsync($"http://localhost:5168/menu/{id}");
+        await GetMenuItemsAsync();
+    }
+
+    private void AddToCart(MenuItem item)
+    {
+        Cart.Add(item);
+    }
+
+    private async Task PlaceOrder()
+    {
+        if (!Cart.Any()) return;
+
+        var orderItems = Cart.GroupBy(x => x.Id)
+            .Select(g => new OrderItemDto(g.Key, g.Count(), null))
+            .ToList();
+
+        var request = new CreateOrderRequest(userId, orderItems, "Created via UI");
+        
+        var response = await Http.PostAsJsonAsync("http://localhost:5168/orders", request);
+        if (response.IsSuccessStatusCode)
+        {
+            Cart.Clear();
+            Navigation.NavigateTo("/orders");
+        }
+    }
 }

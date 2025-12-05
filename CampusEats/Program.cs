@@ -41,8 +41,17 @@ builder.Services.AddSwaggerGen(c =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<CampusEatsContext>(options =>
-    options.UseSqlite("Data Source = CampusEats.db"));
+
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<CampusEatsContext>(options =>
+        options.UseInMemoryDatabase("CampusEats.TestDb"));
+}
+else
+{
+    builder.Services.AddDbContext<CampusEatsContext>(options =>
+        options.UseSqlite("Data Source = CampusEats.db"));
+}
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MenuItemMappingProfile>());
 
 // Register Menu handlers

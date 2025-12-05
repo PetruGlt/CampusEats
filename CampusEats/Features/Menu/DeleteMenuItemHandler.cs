@@ -14,7 +14,7 @@ public class DeleteMenuItemHandler(CampusEatsContext context)
         }
         context.MenuItems.Remove(item);
         await context.SaveChangesAsync();
-        return Results.Ok();
+        return Results.NoContent();
     }
     
 }
