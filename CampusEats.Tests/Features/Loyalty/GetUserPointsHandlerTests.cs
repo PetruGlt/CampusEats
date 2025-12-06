@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-using Xunit;
 using CampusEats.Features.Loyalty;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;

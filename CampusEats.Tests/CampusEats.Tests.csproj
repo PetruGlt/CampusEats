@@ -28,10 +28,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Payment\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\CampusEats\CampusEats.csproj" />
     </ItemGroup>
 

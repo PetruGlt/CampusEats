@@ -1334,9 +1334,6 @@
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/mscorlib.d4fuuhbiqe.wasm
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/netstandard.qwxk4mrnbx.wasm
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/System.Private.CoreLib.8ubjv9s18t.wasm
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.xhwnbh2114.wasm
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.4rnr6dlbdz.pdb
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/dotnet.nxld8jz6gn.js
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/blazor.webassembly.66stpp682q.js.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/Microsoft.AspNetCore.Authorization.f7yamg8acn.wasm.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/Microsoft.AspNetCore.Components.i180xx2qq9.wasm.gz
@@ -1545,9 +1542,6 @@
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/icudt_CJK.tjcz0u77k5.dat.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/icudt_EFIGS.tptq2av103.dat.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/icudt_no_CJK.lfu7j35m59.dat.gz
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.xhwnbh2114.wasm.gz
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.4rnr6dlbdz.pdb.gz
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/dotnet.nxld8jz6gn.js.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/CampusEatsUI.staticwebassets.runtime.json
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/CampusEatsUI.staticwebassets.endpoints.json
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/CampusEatsUI.dll
@@ -2238,10 +2232,6 @@
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/oi423yjf73-{0}-tjcz0u77k5-tjcz0u77k5.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/ck87mhvsyi-{0}-tptq2av103-tptq2av103.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/2nwrv5z733-{0}-lfu7j35m59-lfu7j35m59.gz
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/549hf04q7f-{0}-xhwnbh2114-xhwnbh2114.gz
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/dpy1x212ld-{0}-4rnr6dlbdz-4rnr6dlbdz.gz
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/b6agulhqap-{0}-nxld8jz6gn-nxld8jz6gn.gz
-/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/ksf6lyeq9n-{0}-gy1gb1i1t2-gy1gb1i1t2.gz
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/staticwebassets.build.json
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/staticwebassets.build.json.cache
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/staticwebassets.development.json
@@ -2252,3 +2242,13 @@
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/refint/CampusEatsUI.dll
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/CampusEatsUI.pdb
 /home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/ref/CampusEatsUI.dll
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.xg2gtiuax7.wasm
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.kvvjcqi91z.pdb
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/dotnet.i2f087f5m0.js
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.xg2gtiuax7.wasm.gz
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/CampusEatsUI.kvvjcqi91z.pdb.gz
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/bin/Debug/net10.0/wwwroot/_framework/dotnet.i2f087f5m0.js.gz
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/549hf04q7f-{0}-xg2gtiuax7-xg2gtiuax7.gz
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/dpy1x212ld-{0}-kvvjcqi91z-kvvjcqi91z.gz
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/b6agulhqap-{0}-i2f087f5m0-i2f087f5m0.gz
+/home/petru/RiderProjects/CampusEats/CampusEatsUI/obj/Debug/net10.0/compressed/ksf6lyeq9n-{0}-cxw4gukbz2-cxw4gukbz2.gz
