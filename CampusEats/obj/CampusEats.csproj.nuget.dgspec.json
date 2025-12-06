@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj": {}
+    "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj": {}
   },
   "projects": {
-    "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj": {
+    "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
+        "projectUniqueName": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
         "projectName": "CampusEats",
-        "projectPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
-        "packagesPath": "/home/mrbogdanovich/.nuget/packages/",
-        "outputPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/obj/",
+        "projectPath": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
+        "packagesPath": "/home/petru/.nuget/packages/",
+        "outputPath": "/home/petru/RiderProjects/CampusEats/CampusEats/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/mrbogdanovich/.nuget/NuGet/NuGet.Config"
+          "/home/petru/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -124,7 +124,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/mrbogdanovich/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/petru/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

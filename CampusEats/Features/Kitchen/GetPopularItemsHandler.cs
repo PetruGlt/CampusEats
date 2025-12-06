@@ -9,18 +9,30 @@ public class GetPopularItemsHandler(CampusEatsContext context)
     {
         var topN = request.TopN ?? 10;
 
-        var popularItems = await context.OrderItems
+        // Do aggregates in a form EF Core can translate, then materialize and map in-memory
+        var grouped = await context.OrderItems
             .GroupBy(oi => new { oi.MenuItemId, oi.MenuItemName })
-            .Select(g => new PopularItemResponse(
-                g.Key.MenuItemId,
-                g.Key.MenuItemName,
-                g.Sum(oi => oi.Quantity),
-                g.Count(),
-                g.Sum(oi => oi.Price * oi.Quantity)
-            ))
-            .OrderByDescending(item => item.TotalQuantitySold)
+            .Select(g => new
+            {
+                MenuItemId = g.Key.MenuItemId,
+                MenuItemName = g.Key.MenuItemName,
+                TotalQuantitySold = g.Sum(oi => oi.Quantity),
+                TimesOrdered = g.Count(),
+                TotalRevenue = g.Sum(oi => oi.Price * (decimal)oi.Quantity)
+            })
+            .OrderByDescending(x => x.TotalQuantitySold)
             .Take(topN)
             .ToListAsync();
+
+        var popularItems = grouped
+            .Select(g => new PopularItemResponse(
+                g.MenuItemId,
+                g.MenuItemName,
+                g.TotalQuantitySold,
+                g.TimesOrdered,
+                g.TotalRevenue
+            ))
+            .ToList();
 
         return popularItems;
     }
