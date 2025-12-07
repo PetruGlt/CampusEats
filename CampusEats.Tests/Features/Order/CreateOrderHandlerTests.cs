@@ -6,7 +6,6 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CampusEats.Tests.Features.Order;
-
 public class CreateOrderHandlerTests : IDisposable
 {
     [Fact]

@@ -1,20 +1,30 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bce42a1c_002D921a_002D4a0b_002D8dd2_002D0fb295e5fda4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GivenEmptyName_WhenValidating_ThenShouldReturnError" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5f4c42d8_002D9aa6_002D43ae_002Da3d4_002D0e4abb30cb20/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CreateMenuItemHandlerTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;ProjectFile&gt;FCDC0DF1-7897-47FC-B97D-CB5045BEB10F/d:Features/d:Menus/f:CreateMenuItemHandlerTests.cs&lt;/ProjectFile&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6f22b48f_002Dc2ee_002D46c5_002Db3f5_002D88a36a09bf50/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateMenuItemHandlerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Validators.CreateMenuItemValidatorTests&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Menus.CreateMenuItemHandlerTests.GivenInvalidMenuItem_WhenCreateMenuItem_ThenThrowValidationException&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Menus.CreateMenuItemHandlerTests.GivenValidMenuItem_WhenCreateMenuItem_ThenCreateMenuItem&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Menus.DeleteMenuItemHandlerTests.GivenInvalidMenuItem_WhenDeleteMenuItem_ThenReturnNotFound&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.APITests.CampusEatsAPITests.GetMenuItems_ReturnsSuccess&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Menus.DeleteMenuItemHandlerTests.GivenValidMenuItem_WhenDeleteMenuItem_ThenReturnsNoContent&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Menus.GetAllMenuItemHandlerTests.GivenValidRequest_WhenGetAllMenuItem_ThenReturnOk&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Menus.UpdateMenuItemTests.GivenInvalidRequest_WhenUpdateMenuItem_ThenThrowValidationException&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Menus.UpdateMenuItemTests.GivenValidRequest_WhenUpdateMenuItem_ThenReturnNoContent&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Order.CreateOrderHandlerTests.GivenNonExistentMenuItem_WhenCreateOrder_ThenThrowsMenuItemNotFoundException&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Features.Order.CreateOrderHandlerTests.GivenValidOrder_WhenCreateOrder_ThenCreatesOrderAndComputesTotal&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Validators.CreateOrderValidatorTests.GivenEmptyUserId_WhenValidating_ThenShouldReturnError&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Validators.CreateOrderValidatorTests.GivenEmptyOrderItemList_WhenValidating_ThenShouldReturnError&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Validators.CreateOrderValidatorTests.GivenListOfInvalidOrderItems_WhenValidating_ThenShouldReturnErrors&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net10.0::CampusEats.Tests.Validators.UpdateMenuValidatorTests.GivenEmptyName_WhenValidating_ThenShouldReturnError&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net9.0::CampusEats.Tests.Features.Menus.CreateMenuItemHandlerTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79505747_002D2150_002D468e_002Da265_002D3701ceb9a9ff/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateMenuItemHandlerTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::FCDC0DF1-7897-47FC-B97D-CB5045BEB10F::net9.0::CampusEats.Tests.Features.Menus.CreateMenuItemHandlerTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7e5a5d1f_002Da6ba_002D4102_002D9553_002D4349c547d488/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GivenInvalidMenuItem_WhenCreateMenuItem_ThenThrowValidationException" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/petru/RiderProjects/CampusEats/CampusEats.Tests" Presentation="&amp;lt;CampusEats.Tests&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=976b1150_002Dae8a_002D40cf_002D8ee6_002D0d13bc21363e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from DeleteMenuItemHandlerTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;ProjectFile&gt;FCDC0DF1-7897-47FC-B97D-CB5045BEB10F/d:Features/d:Menus/f:DeleteMenuItemHandlerTests.cs&lt;/ProjectFile&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b82cec0b_002D3249_002D464b_002D8f22_002D12a1d8115f8c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CreateMenuItemHandlerTests.cs #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;ProjectFile&gt;FCDC0DF1-7897-47FC-B97D-CB5045BEB10F/d:Features/d:Menus/f:CreateMenuItemHandlerTests.cs&lt;/ProjectFile&gt;
+&lt;/SessionState&gt;</s:String>
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bce42a1c_002D921a_002D4a0b_002D8dd2_002D0fb295e5fda4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GivenEmptyName_WhenValidating_ThenShouldReturnError" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/petru/RiderProjects/CampusEats/CampusEats.Tests" Presentation="&amp;lt;CampusEats.Tests&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d4795f6a_002D5788_002D4da1_002D8a3b_002D931fb5440210/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CreateMenuItemHandlerTests.cs #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;ProjectFile&gt;FCDC0DF1-7897-47FC-B97D-CB5045BEB10F/d:Features/d:Menus/f:CreateMenuItemHandlerTests.cs&lt;/ProjectFile&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

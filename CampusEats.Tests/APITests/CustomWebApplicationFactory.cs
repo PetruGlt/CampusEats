@@ -9,10 +9,6 @@ namespace CampusEats.Tests.APITests;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    public CustomWebApplicationFactory()
-    {
-        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Testing");
-    }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
