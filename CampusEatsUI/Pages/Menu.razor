@@ -172,8 +172,10 @@
         var response = await Http.PostAsJsonAsync("http://localhost:5168/orders", request);
         if (response.IsSuccessStatusCode)
         {
+            var createdOrder = await response.Content.ReadFromJsonAsync<OrderDto>();
             Cart.Clear();
-            Navigation.NavigateTo("/orders");
+            if(createdOrder is not null)
+                Navigation.NavigateTo($"/orders/{createdOrder.Id}");
         }
     }
 }
