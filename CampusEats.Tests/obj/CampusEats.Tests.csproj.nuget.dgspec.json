@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/petru/RiderProjects/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj": {}
+    "/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj": {}
   },
   "projects": {
-    "/home/petru/RiderProjects/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj": {
+    "/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/petru/RiderProjects/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj",
+        "projectUniqueName": "/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj",
         "projectName": "CampusEats.Tests",
-        "projectPath": "/home/petru/RiderProjects/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj",
-        "packagesPath": "/home/petru/.nuget/packages/",
-        "outputPath": "/home/petru/RiderProjects/CampusEats/CampusEats.Tests/obj/",
+        "projectPath": "/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/CampusEats.Tests.csproj",
+        "packagesPath": "/home/mrbogdanovich/.nuget/packages/",
+        "outputPath": "/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/petru/.nuget/NuGet/NuGet.Config"
+          "/home/mrbogdanovich/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -26,8 +26,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj": {
-                "projectPath": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj"
+              "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj": {
+                "projectPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj"
               }
             }
           }
@@ -84,9 +84,17 @@
               "target": "Package",
               "version": "[4.20.72, )"
             },
+            "NSubstitute": {
+              "target": "Package",
+              "version": "[5.3.0, )"
+            },
             "ReportGenerator": {
               "target": "Package",
               "version": "[5.5.0, )"
+            },
+            "bunit": {
+              "target": "Package",
+              "version": "[2.1.1, )"
             },
             "coverlet.collector": {
               "target": "Package",
@@ -127,21 +135,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/petru/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/mrbogdanovich/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj": {
+    "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
+        "projectUniqueName": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
         "projectName": "CampusEats",
-        "projectPath": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
-        "packagesPath": "/home/petru/.nuget/packages/",
-        "outputPath": "/home/petru/RiderProjects/CampusEats/CampusEats/obj/",
+        "projectPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
+        "packagesPath": "/home/mrbogdanovich/.nuget/packages/",
+        "outputPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/petru/.nuget/NuGet/NuGet.Config"
+          "/home/mrbogdanovich/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -251,7 +259,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/petru/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/mrbogdanovich/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

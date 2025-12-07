@@ -3,7 +3,7 @@
 @using CampusEatsUI.Models
 @using CampusEatsUI.Models.DTOs
 @inject HttpClient Http
-@inject NavigationManager Navigation
+@inject NavigationManager NavigationManager
 
 <h3>Order Details</h3>
 
@@ -42,7 +42,7 @@ else
                     }
                     else
                     {
-                        <span>Proceed to Checkout</span>
+                        <span>Proceed to Orders</span>
                     }
                 </button>
             }
@@ -68,19 +68,6 @@ else
 
     private async Task Checkout()
     {
-        isProcessing = true;
-        var request = new { OrderId = OrderId.ToString() };
-        var response = await Http.PostAsJsonAsync("http://localhost:5168/orders", request);
-
-        if (response.IsSuccessStatusCode)
-        {
-            var sessionUrl = await response.Content.ReadAsStringAsync();
-            Navigation.NavigateTo(sessionUrl, forceLoad: true);
-        }
-        else
-        {
-            // Handle error, maybe show a message to the user
-            isProcessing = false;
-        }
+        NavigationManager.NavigateTo($"http://localhost:5159/orders");
     }
 }

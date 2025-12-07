@@ -4127,19 +4127,19 @@
     ]
   },
   "packageFolders": {
-    "/home/petru/.nuget/packages/": {}
+    "/home/mrbogdanovich/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
+      "projectUniqueName": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
       "projectName": "CampusEats",
-      "projectPath": "/home/petru/RiderProjects/CampusEats/CampusEats/CampusEats.csproj",
-      "packagesPath": "/home/petru/.nuget/packages/",
-      "outputPath": "/home/petru/RiderProjects/CampusEats/CampusEats/obj/",
+      "projectPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
+      "packagesPath": "/home/mrbogdanovich/.nuget/packages/",
+      "outputPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/petru/.nuget/NuGet/NuGet.Config"
+        "/home/mrbogdanovich/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -4249,7 +4249,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/petru/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/mrbogdanovich/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
