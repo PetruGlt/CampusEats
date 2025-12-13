@@ -4,6 +4,7 @@ using CampusEats.Features.Orders;
 using CampusEats.Features.Kitchen;
 using CampusEats.Features.Loyalty;
 using CampusEats.Features.Payment;
+using CampusEats.Features.Users;
 using CampusEats.Mappings;
 using CampusEats.Middleware;
 using CampusEats.Persistence;
@@ -54,6 +55,15 @@ else
 }
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MenuItemMappingProfile>());
 
+// Register User handlers
+builder.Services.AddScoped<CreateUserHandler>();
+builder.Services.AddScoped<GetAllUsersHandler>();
+builder.Services.AddScoped<GetUserByIdHandler>();
+builder.Services.AddScoped<GetUserByCredentialHandler>();
+builder.Services.AddScoped<UpdateUserHandler>();
+builder.Services.AddScoped<DeleteUserHandler>();
+
+
 // Register Menu handlers
 builder.Services.AddScoped<CreateMenuItemHandler>();
 builder.Services.AddScoped<GetAllMenuItemsHandler>();
@@ -93,6 +103,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<UpdateMenuItemValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateOrderStatusValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateOrderStatusRequestBodyValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateUserValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddCors(options =>
@@ -132,6 +144,50 @@ app.UseGlobalExceptionMiddleware();
 app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
+
+// User endpoints
+
+app.MapPost("/users/create", async (CreateUserRequest command, CreateUserHandler handler) =>
+    await handler.Handler(command))
+    .WithTags("Users")
+    .WithName("CreateUser")
+    .WithOpenApi();
+
+app.MapGet("/users", async (GetAllUsersHandler handler) =>
+    await handler.Handle(new GetAllUsersRequest()))
+    .WithTags("Users")
+    .WithName("GetAllUsers")
+    .WithOpenApi();
+
+app.MapGet("/users/{id:guid}", async (Guid id, GetUserByIdHandler handler) =>
+    await handler.Handle(new GetUserByIdRequest(id)))
+    .WithTags("Users")
+    .WithName("GetUserById")
+    .WithOpenApi();
+
+app.MapPost("/users", async (GetUserByCredentialRequest command, GetUserByCredentialHandler handler) =>
+    await handler.Handle(command))
+    .WithTags("Users")
+    .WithName("GetUserByCredential")
+    .WithOpenApi();
+app.MapPut("/users/{id:guid}", async (Guid id, UpdateUserRequest command, UpdateUserHandler handler) =>
+{
+    var updated = command with { Id = id };
+    var result = await handler.Handle(updated);
+    return result;
+})
+.WithTags("Users")
+.WithName("UpdateUser")
+.WithOpenApi();
+
+app.MapDelete("/users/{id:guid}", async (Guid id, DeleteUserHandler handler) =>
+{
+    await handler.Handle(new DeleteUserRequest(id));
+})
+.WithTags("Users")
+.WithName("DeleteUser")
+.WithOpenApi();
+
 
 // Menu endpoints
 app.MapPost("/menu", async (CreateMenuItemRequest command, CreateMenuItemHandler handler) => 

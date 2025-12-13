@@ -844,3 +844,5 @@ D:/facultate/.net/Project/CampusEats/bin/Debug/net9.0/System.Security.Cryptograp
 /home/petru/RiderProjects/CampusEats/CampusEats/bin/Debug/net9.0/System.Security.Cryptography.ProtectedData.dll
 /home/petru/RiderProjects/CampusEats/CampusEats/obj/Debug/net9.0/CampusEats.sourcelink.json
 /home/petru/RiderProjects/CampusEats/CampusEats/obj/Debug/net9.0/swae.build.ex.cache
+/home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/DevOne.Security.Cryptography.BCrypt.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net9.0/BCrypt.Net-Next.dll

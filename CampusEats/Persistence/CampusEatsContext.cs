@@ -2,6 +2,7 @@ using CampusEats.Features.Loyalty;
 using CampusEats.Features.Menu;
 using CampusEats.Features.Orders;
 using CampusEats.Features.Payment;
+using CampusEats.Features.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace CampusEats.Persistence;
@@ -13,6 +14,7 @@ public class CampusEatsContext(DbContextOptions<CampusEatsContext> options) : Db
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Payment> Payments { get; set; }
     public DbSet<UserLoyalty> UserLoyalties { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

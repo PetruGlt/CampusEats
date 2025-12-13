@@ -33,4 +33,8 @@
       <ProjectReference Include="..\CampusEats\CampusEats.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Users\" />
+    </ItemGroup>
+
 </Project>
