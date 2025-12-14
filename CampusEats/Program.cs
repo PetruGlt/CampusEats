@@ -5,6 +5,7 @@ using CampusEats.Features.Kitchen;
 using CampusEats.Features.Loyalty;
 using CampusEats.Features.Payment;
 using CampusEats.Features.Users;
+using CampusEats.Features.Webhooks;
 using CampusEats.Mappings;
 using CampusEats.Middleware;
 using CampusEats.Persistence;
@@ -92,6 +93,7 @@ builder.Services.AddScoped<GetPopularItemsHandler>();
 builder.Services.AddScoped<CreatePaymentHandler>();
 builder.Services.AddScoped<GetPaymentHistoryHandler>();
 builder.Services.AddScoped<GetPaymentByIdHandler>();
+builder.Services.AddScoped<HandleStripeWebhook>();
 
 // Register Loyalty services
 builder.Services.AddScoped<LoyaltyService>();
@@ -379,39 +381,14 @@ app.MapGet("/payments/{id:guid}", async (Guid id, GetPaymentByIdHandler handler)
     .WithName("GetPaymentById")
     .WithOpenApi();
 
-// TEMPORARY TEST ENDPOINT - Simulate successful payment
-app.MapPost("/payments/{id:guid}/test-complete", async (Guid id, CampusEatsContext context, LoyaltyService loyaltyService) =>
+app.MapPost("/webhooks/stripe", async (HttpContext context, HandleStripeWebhook handler) =>
 {
-    var payment = await context.Payments.FindAsync(id);
-    if (payment == null)
-        return Results.NotFound(new { message = "Payment not found" });
+    var json = await new StreamReader(context.Request.Body).ReadToEndAsync();
+    var signature = context.Request.Headers["Stripe-Signature"].ToString();
 
-    payment.Status = PaymentStatus.Succeeded;
-    payment.CompletedAt = DateTime.UtcNow;
-    
-    // Update order status
-    var order = await context.Orders.FindAsync(payment.OrderId);
-    if (order != null && order.Status == OrderStatus.Pending)
-    {
-        order.Status = OrderStatus.Preparing;
-        order.UpdatedAt = DateTime.UtcNow;
-        
-        await loyaltyService.AddPointsForOrder(order.UserId, order.TotalAmount);
-    }
-
-    await context.SaveChangesAsync();
-    
-    return Results.Ok(new 
-    { 
-        message = "Payment marked as succeeded", 
-        paymentId = payment.Id, 
-        orderId = payment.OrderId,
-        pointsEarned = (int)((order?.TotalAmount ?? 0) * 10)
-    });
-})
-    .WithTags("Payment - Testing")
-    .WithName("TestCompletePayment")
-    .WithOpenApi();
+    var success = await handler.Handle(json, signature);
+    return success ? Results.Ok() : Results.BadRequest();
+});
 
 // Loyalty endpoint
 app.MapGet("/loyalty/{userId}", async (string userId, GetUserPointsHandler handler) =>

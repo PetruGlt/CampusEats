@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj": {}
+    "D:\\facultate\\.net\\CampusEats\\CampusEats\\CampusEats.csproj": {}
   },
   "projects": {
-    "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj": {
+    "D:\\facultate\\.net\\CampusEats\\CampusEats\\CampusEats.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
+        "projectUniqueName": "D:\\facultate\\.net\\CampusEats\\CampusEats\\CampusEats.csproj",
         "projectName": "CampusEats",
-        "projectPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/CampusEats.csproj",
-        "packagesPath": "/home/mrbogdanovich/.nuget/packages/",
-        "outputPath": "/home/mrbogdanovich/git/CampusEats/CampusEats/obj/",
+        "projectPath": "D:\\facultate\\.net\\CampusEats\\CampusEats\\CampusEats.csproj",
+        "packagesPath": "C:\\Users\\Paul\\.nuget\\packages\\",
+        "outputPath": "D:\\facultate\\.net\\CampusEats\\CampusEats\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/mrbogdanovich/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Paul\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -116,11 +116,15 @@
               "version": "[9.0.11, 9.0.11]"
             },
             {
-              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "name": "Microsoft.NETCore.App.Host.win-x64",
               "version": "[9.0.11, 9.0.11]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.11, 9.0.11]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
               "version": "[9.0.11, 9.0.11]"
             }
           ],
@@ -132,7 +136,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/mrbogdanovich/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
