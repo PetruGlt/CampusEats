@@ -8,7 +8,7 @@ public class GetUserByCredentialHandler(CampusEatsContext context)
     public async Task<IResult> Handle(GetUserByCredentialRequest request)
     {
         var existingUser =
-            await context.Users.FirstOrDefaultAsync(x => x.Username == request.Username && x.Email == request.Email);
+            await context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
 
         if (existingUser == null)
         {

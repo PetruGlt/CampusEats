@@ -1,7 +1,61 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@using System.Text.Json
 
-<PageTitle>Home</PageTitle>
+<h3>CampusEats.net</h3>
+<p>Enjoy out thoughtfully crafted slop</p>
 
-<h1>Campus Eats</h1>
+@if (User != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Welcome, @User.Username</h5>
+            <p class="card-text"><strong>User ID:</strong> @User.Id</p>
+            <p class="card-text"><strong>Email:</strong> @User.Email</p>
+            <button class="btn btn-danger mt-3" @onclick="Logout">Logout</button>
+        </div>
+    </div>
+}
+else
+{
+    <a href="login" class="btn btn-primary">Login</a>
+    <a href="register" class="btn btn-primary">Register</a>
+}
 
-Enjoy a good meal
+@code {
+    private UserSession? User;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var cookie = await JSRuntime.InvokeAsync<string>("eval", "document.cookie");
+        if (!string.IsNullOrEmpty(cookie))
+        {
+            var cookies = cookie.Split(';');
+            var sessionCookie = cookies.FirstOrDefault(c => c.Trim().StartsWith("user_session="));
+            if (!string.IsNullOrEmpty(sessionCookie))
+            {
+                var jsonString = sessionCookie.Split('=')[1];
+                try 
+                {
+                    var decodedJson = System.Net.WebUtility.UrlDecode(jsonString);
+                    User = JsonSerializer.Deserialize<UserSession>(decodedJson);
+                }
+                catch { /* Ignore invalid cookie */ }
+            }
+        }
+    }
+
+    private async Task Logout()
+    {
+        await JSRuntime.InvokeVoidAsync("eval", "document.cookie = 'user_session=; max-age=0; path=/; secure; samesite=strict'");
+        NavigationManager.NavigateTo("/");
+    }
+
+    private class UserSession
+    {
+        public Guid Id { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+    }
+}

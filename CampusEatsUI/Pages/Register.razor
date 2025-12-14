@@ -1,0 +1,79 @@
+@page "/register"
+@using System.ComponentModel.DataAnnotations
+@using System.Net
+@using CampusEatsUI.Models.DTOs
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<h3>Register</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <EditForm Model="@Input" OnValidSubmit="HandleRegistration">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">Your username</label>
+                <InputText id="username" class="form-control" @bind-Value="Input.Username" />
+                <ValidationMessage For="@(() => Input.Username)" />
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <InputText id="email" class="form-control" @bind-Value="Input.Email" />
+                <ValidationMessage For="@(() => Input.Email)" />
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <InputText type="password" id="password" class="form-control" @bind-Value="Input.Password" />
+                <ValidationMessage For="@(() => Input.Password)" />
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <InputText type="password" id="confirmPassword" class="form-control" @bind-Value="Input.ConfirmPassword" />
+                <ValidationMessage For="@(() => Input.ConfirmPassword)" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private RegisterModel Input { get; set; } = new();
+    private string? ErrorMessage;
+
+    private async void HandleRegistration()
+    {
+        ErrorMessage = null;
+
+        if (Input.Password == Input.ConfirmPassword)
+        {
+            var request = new CreateUserRequest(Input.Username, Input.Email, Input.Password);
+            var response = await Http.PostAsJsonAsync("http://localhost:5168/users/create", request);
+            if (response.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                ErrorMessage = "Something went wrong";
+            }
+        }
+        else
+        {
+            ErrorMessage = "Passwords did not match";
+        }
+    }
+
+    public class RegisterModel
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string ConfirmPassword { get; set; } = string.Empty;
+    }
+}

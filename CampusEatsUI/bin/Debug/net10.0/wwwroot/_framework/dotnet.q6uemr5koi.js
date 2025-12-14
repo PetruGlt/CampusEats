@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "CampusEatsUI",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-UwG9FY5pKn2SPtr6WFheKqIRmynytaY/I5zbWmu0Kt4=",
+    "hash": "sha256-8mmJQL/iq6sFGcespESOuh1wdjt6W6HyffPaNMtfXcc=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -52,6 +52,11 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       }
     ],
     "assembly": [
+      {
+        "virtualPath": "Blazored.LocalStorage.wasm",
+        "name": "Blazored.LocalStorage.12n6dz54qr.wasm",
+        "integrity": "sha256-OaMAAd5n7ORfyur5e3QIyEVKJ76MKIvwbg7/icnnYcU="
+      },
       {
         "virtualPath": "Microsoft.AspNetCore.Authorization.wasm",
         "name": "Microsoft.AspNetCore.Authorization.f7yamg8acn.wasm",
@@ -1039,15 +1044,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "CampusEatsUI.wasm",
-        "name": "CampusEatsUI.b66l0557xc.wasm",
-        "integrity": "sha256-fanru88R1tbgvhKcOjE4skljBnz0JFgOGR91jlcokjY="
+        "name": "CampusEatsUI.18i0uvh05f.wasm",
+        "integrity": "sha256-QSacLfeAgi9a7798scoY2yE99z8oBmA6hT3+WMbrSxY="
       }
     ],
     "pdb": [
       {
         "virtualPath": "CampusEatsUI.pdb",
-        "name": "CampusEatsUI.pse8xos1q0.pdb",
-        "integrity": "sha256-F+JOFjxkwwT2Cd/mbbIojPojzGRhZFwoflEJJIWsmKk="
+        "name": "CampusEatsUI.75fatbpq81.pdb",
+        "integrity": "sha256-K8RKpeUVAI8w015cWVpuDX5NCY2Me8Ybfp3OYsiBwBQ="
       }
     ],
     "libraryInitializers": [
