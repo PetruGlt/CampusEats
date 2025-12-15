@@ -57,9 +57,9 @@ else
 @code {
     [Parameter]
     public Guid OrderId { get; set; }
-
     private OrderDto? order;
     private bool isProcessing = false;
+    private bool useLoyaltyPoints = false;
 
     protected override async Task OnInitializedAsync()
     {
