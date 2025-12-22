@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services\" />
+      <Folder Include="Models\Requests\Stripe\" />
       <Folder Include="wwwroot\Img\" />
     </ItemGroup>
 

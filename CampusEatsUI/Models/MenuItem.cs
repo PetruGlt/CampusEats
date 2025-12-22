@@ -1,8 +1,8 @@
 namespace CampusEatsUI.Models;
 
-public class MenuItem
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public decimal Price { get; set; }
-}
+public record MenuItem( 
+    Guid Id,
+    string Name,
+    decimal Price
+);
+    

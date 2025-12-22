@@ -1,0 +1,36 @@
+using System.Net.Http.Json;
+using CampusEatsUI.Models;
+using CampusEatsUI.Models.Requests;
+
+namespace CampusEatsUI.Services.Menu;
+
+public class MenuService(HttpClient _http) : IMenuService
+{
+    public async void CreateMenuItemAsync(string name, decimal price)
+    {
+        var request = new CreateMenuItemRequest(name, price);
+        await _http.PostAsJsonAsync("http://localhost:5168/menu", request);
+    }
+
+    public async void UpdateMenuItemAsync(Guid id, string name, decimal price)
+    {
+        var request = new UpdateMenuItemRequest(id, name, price);
+        await _http.PutAsJsonAsync($"http://localhost:5168/menu/{id}", request);
+    }
+
+    public async void DeleteMenuItemAsync(Guid id)
+    {
+        await _http.DeleteAsync($"http://localhost:5168/menu/{id}");
+    }
+
+    public async Task<List<MenuItem>> GetAllMenuItemsAsync()
+    {
+        var items = await _http.GetFromJsonAsync<List<MenuItem>>("http://localhost:5168/menu");
+        return items ?? null;
+    }
+
+    public Task<MenuItem> GetMenuItemByIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+}
