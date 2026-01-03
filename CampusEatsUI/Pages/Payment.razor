@@ -1,10 +1,17 @@
 @page "/payment"
-@using CampusEatsUI.Models.DTOs
+@using CampusEatsUI.Models
+@using CampusEatsUI.Models.Helpers
+@using CampusEatsUI.Services.Auth
+@using CampusEatsUI.Services.Payment
 @inject HttpClient Http
+@inject IJSRuntime JsRuntime
+@inject IAuthService AuthService
+@inject NavigationManager Navigation
+@inject IPaymentService PaymentService
 
 <h3>Payments</h3>
 
-<div class="row mb-3">
+@*<div class="row mb-3">
     <div class="col-md-6">
         <label>User ID Filter:</label>
         <div class="input-group">
@@ -12,11 +19,10 @@
             <button class="btn btn-primary" @onclick="LoadPayments">Filter</button>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="row">
     <div class="col-md-8">
-        <h4>Payment History</h4>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -25,55 +31,34 @@
                 <th>Amount</th>
                 <th>Status</th>
                 <th>Date</th>
-                <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            @if (payments != null)
+            @if (_payments != null)
             {
-                @foreach (var p in payments)
+                @foreach (var p in _payments)
                 {
                     <tr>
-                        <td>@p.Id.ToString().Substring(0, 6)...</td>
+                        <td>@p.PaymentId.ToString().Substring(0, 6)...</td>
                         <td>@p.OrderId.ToString().Substring(0, 6)...</td>
                         <td>@p.Amount.ToString("C")</td>
                         <td>
                             <span class="@GetStatusBadge(p.Status)">@p.Status</span>
                         </td>
                         <td>@p.CreatedAt.ToShortDateString()</td>
-                        <td>
-                            @if (p.Status != "Succeeded")
-                            {
-                                <button class="btn btn-sm btn-success" @onclick="() => CompletePayment(p.Id)">Simulate Pay</button>
-                            }
-                        </td>
                     </tr>
                 }
             }
             </tbody>
         </table>
     </div>
-    
-    <div class="col-md-4">
-        <div class="card p-3">
-            <h5>Create Checkout (Sim)</h5>
-            <div class="mb-2">
-                <label>Order ID:</label>
-                <input @bind="newOrderId" class="form-control" placeholder="Guid..." />
-            </div>
-            <div class="mb-2">
-                <label>Amount:</label>
-                <input @bind="newAmount" type="number" class="form-control" />
-            </div>
-            <button class="btn btn-primary w-100" @onclick="CreateCheckout">Create Payment</button>
-        </div>
-    </div>
 </div>
 
 
 @code {
-    private List<PaymentDto>? payments;
-    private string userId = "";
+    private List<PaymentHistoryResponse> _payments;
+
+    private UserSession _user;
     
     // Create Payment
     private string newOrderId = "";
@@ -81,19 +66,37 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadPayments();
+        var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
+        if (!string.IsNullOrEmpty(cookie))
+        {
+            var token = AuthService.GetTokenAsync(cookie);
+
+            try
+            {
+                _user = AuthService.ParseJwt(token);
+                await LoadPayments();
+            }
+            catch
+            {
+                Navigation.NavigateTo("/login");
+            }
+        }
+        else
+        {
+            Navigation.NavigateTo("/login");
+        }
     }
 
     private async Task LoadPayments()
     {
-        var url = "http://localhost:5168/payments/history";
-        if (!string.IsNullOrEmpty(userId)) url += $"?userId={userId}";
-        
         try
         {
-            payments = await Http.GetFromJsonAsync<List<PaymentDto>>(url);
+            _payments = await PaymentService.GetPaymentHistoryAsync(_user.Id.ToString(), DateTime.MinValue, DateTime.MaxValue, string.Empty);
         }
-        catch {}
+        catch
+        {
+            _payments = new List<PaymentHistoryResponse>();
+        }
     }
 
     private string GetStatusBadge(string status) => status switch
@@ -103,22 +106,5 @@
         "Failed" => "badge bg-danger",
         _ => "badge bg-secondary"
     };
-
-    private async Task CreateCheckout()
-    {
-        if (Guid.TryParse(newOrderId, out Guid orderGuid))
-        {
-            var req = new CreatePaymentRequest(orderGuid, newAmount);
-            await Http.PostAsJsonAsync("http://localhost:5168/payments/create-checkout", req);
-            await LoadPayments();
-            newOrderId = "";
-            newAmount = 0;
-        }
-    }
-
-    private async Task CompletePayment(Guid paymentId)
-    {
-        await Http.PostAsync($"http://localhost:5168/payments/{paymentId}/test-complete", null);
-        await LoadPayments();
-    }
+    
 }

@@ -32,6 +32,26 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/mrbogdanovich/git/CampusEats/CampusEatsUI/Pages/AdminSpace/MenuItemsOrders.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW5TcGFjZS9NZW51SXRlbXNPcmRlcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mrbogdanovich/git/CampusEats/CampusEatsUI/Pages/AdminSpace/Payment.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW5TcGFjZS9QYXltZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mrbogdanovich/git/CampusEats/CampusEatsUI/Pages/AdminSpace/UserLoyalty.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW5TcGFjZS9Vc2VyTG95YWx0eS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mrbogdanovich/git/CampusEats/CampusEatsUI/Pages/AdminSpace/Users.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW5TcGFjZS9Vc2Vycy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mrbogdanovich/git/CampusEats/CampusEatsUI/Pages/Checkout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ2hlY2tvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/mrbogdanovich/git/CampusEats/CampusEatsUI/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

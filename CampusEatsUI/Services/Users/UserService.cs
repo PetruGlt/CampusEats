@@ -1,34 +1,31 @@
+using System.Net.Http.Json;
+using CampusEatsUI.Models.Requests.Users;
+using Microsoft.AspNetCore.Components;
+
 namespace CampusEatsUI.Services.Users;
 
-public class UserService(HttpClient _http) : IUserService
+public class UserService(HttpClient _http, NavigationManager _navigator) : IUserService
 {
-    public void CreateUserAsync(string username, string email, string password)
+    private const string BaseUrl = "https://localhost:5168/users";
+
+    public async Task<List<Models.Users>> GetAllUsersAsync()
     {
-        throw new NotImplementedException();
+        return await _http.GetFromJsonAsync<List<Models.Users>>($"{BaseUrl}").ContinueWith(t => t.Result ?? []);
+    }
+    
+    public async Task<Models.Users> GetUserByIdAsync(Guid id)
+    {
+        return await _http.GetFromJsonAsync<Models.Users>($"{BaseUrl}/{id}")!;
     }
 
-    public Task<List<Models.Users>> GetAllUsersAsync()
+    public async Task UpdateUserAsync(Guid id, string username, string email, string plainPassword)
     {
-        throw new NotImplementedException();
+        var request = new UpdateUserRequest(id, username, email, plainPassword);
+        await _http.PutAsJsonAsync($"{BaseUrl}/{id}", request);
     }
 
-    public Task<Models.Users> GetUserByCredentialAsync(string email, string plainPassword)
+    public async Task DeleteUserAsync(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Models.Users> GetUserByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpdateUserAsync(Guid id, string username, string email, string plainPassword)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DeleteUserAsync(Guid id)
-    {
-        throw new NotImplementedException();
+        await _http.DeleteAsync($"{BaseUrl}/{id}");
     }
 }

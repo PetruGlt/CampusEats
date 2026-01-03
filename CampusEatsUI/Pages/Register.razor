@@ -1,9 +1,8 @@
 @page "/register"
-@using System.ComponentModel.DataAnnotations
-@using System.Net
-@using CampusEatsUI.Models.DTOs
+@using CampusEatsUI.Services.Auth
 @inject NavigationManager NavigationManager
-@inject HttpClient Http
+@inject IAuthService AuthService;
+@inject IJSRuntime JsRuntime;
 
 <h3>Register</h3>
 
@@ -12,6 +11,11 @@
         <EditForm Model="@Input" OnValidSubmit="HandleRegistration">
             <DataAnnotationsValidator />
             <ValidationSummary />
+            
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <div class="alert alert-danger">@_errorMessage</div>
+            }
             
             <div class="mb-3">
                 <label for="email" class="form-label">Your username</label>
@@ -44,28 +48,34 @@
 
 @code {
     private RegisterModel Input { get; set; } = new();
-    private string? ErrorMessage;
+    private string? _errorMessage;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
+        if (!string.IsNullOrEmpty(cookie))
+        {
+            var token = AuthService.GetTokenAsync(cookie);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
+    }
 
     private async void HandleRegistration()
     {
-        ErrorMessage = null;
+        _errorMessage = null;
 
         if (Input.Password == Input.ConfirmPassword)
         {
-            var request = new CreateUserRequest(Input.Username, Input.Email, Input.Password);
-            var response = await Http.PostAsJsonAsync("http://localhost:5168/users/create", request);
-            if (response.IsSuccessStatusCode)
-            {
-                NavigationManager.NavigateTo("/login");
-            }
-            else
-            {
-                ErrorMessage = "Something went wrong";
-            }
+            await AuthService.RegisterAsync(Input.Username, Input.Email, Input.Password);
+            NavigationManager.NavigateTo("/login");
         }
         else
         {
-            ErrorMessage = "Passwords did not match";
+            _errorMessage = "Passwords did not match";
         }
     }
 

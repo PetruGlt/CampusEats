@@ -11,10 +11,12 @@ public class GetAllOrdersHandler(CampusEatsContext context)
             .Include(o => o.Items)
             .AsQueryable();
 
-        if (!string.IsNullOrEmpty(request.UserId))
+        /*if (!string.IsNullOrEmpty(request.UserId))
         {
             query = query.Where(o => o.UserId == request.UserId);
-        }
+        }*/
+
+        query = query.Where(o => o.UserId == request.UserId);
 
         var orders = await query
             .OrderByDescending(o => o.CreatedAt)

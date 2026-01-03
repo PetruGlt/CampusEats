@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <Folder Include="Models\Requests\Stripe\" />
+      <Folder Include="Pages\KitchenUI\" />
       <Folder Include="wwwroot\Img\" />
     </ItemGroup>
 

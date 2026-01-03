@@ -23,7 +23,7 @@ public class SearchOrdersHandlerTests
             new OrderEntity
             {
                 Id = Guid.NewGuid(),
-                UserId = "john_doe",
+                UserId = Guid.NewGuid(),
                 Status = OrderStatus.Pending,
                 Notes = "Leave at door",
                 CreatedAt = DateTime.UtcNow.AddMinutes(-10),
@@ -35,7 +35,7 @@ public class SearchOrdersHandlerTests
             new OrderEntity
             {
                 Id = Guid.NewGuid(),
-                UserId = "jane_smith",
+                UserId = Guid.NewGuid(),
                 Status = OrderStatus.Completed,
                 Notes = null,
                 CreatedAt = DateTime.UtcNow.AddMinutes(-20),
@@ -47,7 +47,7 @@ public class SearchOrdersHandlerTests
             new OrderEntity
             {
                 Id = Guid.NewGuid(),
-                UserId = "john_doe",
+                UserId = Guid.NewGuid(),
                 Status = OrderStatus.Cancelled,
                 Notes = "Changed mind",
                 CreatedAt = DateTime.UtcNow.AddMinutes(-5),
@@ -98,7 +98,7 @@ public class SearchOrdersHandlerTests
 
             // Assert
             Assert.Single(result);
-            Assert.Equal("jane_smith", result.First().UserId);
+            Assert.Equal(Guid.NewGuid(), result.First().UserId);
         }
     }
 

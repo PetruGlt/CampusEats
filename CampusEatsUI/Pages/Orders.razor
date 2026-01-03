@@ -1,21 +1,26 @@
 @page "/orders"
-@using CampusEatsUI.Models.DTOs
-@inject HttpClient Http
+@using CampusEatsUI.Models.Helpers
+@using CampusEatsUI.Services.Orders
+@using CampusEatsUI.Services.Auth
 @inject NavigationManager NavigationManager
+@inject IOrderService OrderService;
+@inject IAuthService AuthService;
+@inject IJSRuntime JsRuntime;
+@inject NavigationManager Navigation;
 
 <div class="row mb-3">
     <div class="col-md-6">
         <div class="input-group">
-            <input @bind="searchQuery" class="form-control" placeholder="Search orders..." />
+            <input @bind="_searchQuery" class="form-control" placeholder="Search orders..." />
             <button class="btn btn-outline-secondary" @onclick="SearchOrders">Search</button>
         </div>
     </div>
-    <div class="col-md-6">
+    @*<div class="col-md-6">
         <button class="btn btn-info" @onclick="GetStatistics">Load Statistics</button>
-    </div>
+    </div>*@
 </div>
 
-@if (stats != null)
+@*@if (stats != null)
 {
     <div class="row mb-3">
         <div class="col-md-4">
@@ -41,21 +46,20 @@
             <div class="card">
                 <div class="card-header">Orders by Status</div>
                 <div class="card-body">
-                    @foreach (var status in stats.OrdersByStatus)
+                    @foreach (var status in stats.OrdersByStatus.GetType().GetProperties())
                     {
-                        <p class="card-text mb-1"><strong>@status.Key:</strong> @status.Value</p>
+                        <p class="card-text mb-1"><strong>@status.Name:</strong> @status.GetValue(stats.OrdersByStatus)</p>
                     }
                 </div>
             </div>
         </div>
     </div>
-}
+}*@
 
 <table class="table">
     <thead>
         <tr>
             <th>ID</th>
-            <th>User</th>
             <th>Status</th>
             <th>Total</th>
             <th>Created</th>
@@ -63,13 +67,12 @@
         </tr>
     </thead>
     <tbody>
-        @if (orders != null)
+        @if (_orders != null)
         {
-            @foreach (var order in orders)
+            @foreach (var order in _orders)
             {
                 <tr>
                     <td>@order.Id.ToString().Substring(0, 8)...</td>
-                    <td>@order.UserId</td>
                     <td><span class="badge bg-primary">@order.Status</span></td>
                     <td>@order.TotalAmount.ToString("C")</td>
                     <td>@order.CreatedAt.ToShortTimeString()</td>
@@ -81,27 +84,51 @@
                 </tr>
             }
         }
+        else
+        {
+            <tr><td colspan="5">Interesting... there seems to be nothing here! 🦗🦗🦗</td></tr>
+        }
     </tbody>
 </table>
 
-@if (waitTimeMessage != null)
+@if (_waitTimeMessage != null)
 {
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        @waitTimeMessage
-        <button type="button" class="btn-close" @onclick="() => waitTimeMessage = null"></button>
+        @_waitTimeMessage
+        <button type="button" class="btn-close" @onclick="() => _waitTimeMessage = null"></button>
     </div>
 }
 @code {
-    private List<OrderDto>? orders;
-    // Assuming the new DTO is in the same namespace
-    // public record OrderStatisticsDTO(int TotalOrders, decimal TotalRevenue, decimal AverageOrderValue, Dictionary<string, int> OrdersByStatus, int TodayOrders, decimal TodayRevenue);
-    private OrderStatisticsDTO? stats;
-    private string searchQuery = "";
-    private string? waitTimeMessage;
+    private List<Models.Orders>? _orders;
+
+    private UserSession _user;
+    
+    private string _searchQuery = "";
+    private string? _waitTimeMessage;
+    
+    
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadOrders();
+        var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
+        if (!string.IsNullOrEmpty(cookie))
+        {
+            var token = AuthService.GetTokenAsync(cookie);
+
+            try
+            {
+                _user = AuthService.ParseJwt(token);
+                await LoadOrders();
+            }
+            catch
+            {
+                Navigation.NavigateTo("/login");
+            }
+        }
+        else
+        {
+            Navigation.NavigateTo("/login");
+        }
     }
 
     private async Task LoadOrders()
@@ -109,12 +136,11 @@
         // Using a generic search/list endpoint or specifically GetAllOrders
         try
         {
-            orders = await Http.GetFromJsonAsync<List<OrderDto>>($"http://localhost:5168/orders");
+            _orders = await OrderService.GetAllOrdersAsync(_user.Id);
         }
         catch (Exception ex)
         {
-            // Optionally log the exception
-            // For now, we fail silently to prevent UI crash
+            _orders = null;
         }
     }
 
@@ -122,42 +148,36 @@
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(searchQuery))
+            if (string.IsNullOrWhiteSpace(_searchQuery))
             {
                 await LoadOrders();
             }
             else
             {
-                orders = await Http.GetFromJsonAsync<List<OrderDto>>($"http://localhost:5168/orders/search?query={searchQuery}");
+                _orders = await OrderService.SearchOrdersAsync(_searchQuery, "");
             }
         }
         catch (Exception ex)
         {
-            // Log or handle error
+            _orders = null;
         }
     }
 
     private async Task CancelOrder(Guid id)
     {
-        await Http.PutAsync($"http://localhost:5168/orders/{id}/cancel", null);
+        await OrderService.CancelOrderAsync(id);
         await LoadOrders();
     }
 
     private async Task CheckWaitTime(Guid id)
     {
-        var time = await Http.GetFromJsonAsync<OrderWaitTimeResponse>($"http://localhost:5168/orders/{id}/wait-time");
-        waitTimeMessage = $"Estimated wait time for order {id.ToString().Substring(0,4)}: {time.EstimatedWaitMinutes} minutes";
+        var time = await OrderService.GetOrderWaitTimeAsync(id);
+        _waitTimeMessage = $"Estimated wait time for order {id.ToString().Substring(0,4)}: {time.EstimatedWaitMinutes} minutes";
     }
-
-    private async Task GetStatistics()
-    {
-        stats = await Http.GetFromJsonAsync<OrderStatisticsDTO>($"http://localhost:5168/orders/statistics");
-    }
+    
     
     private void ViewDetails(Guid id)
     {
-        //redirect to localhost/orders/{OrderId:guid}
         NavigationManager.NavigateTo($"/orders/{id}");
-        
     }
 }

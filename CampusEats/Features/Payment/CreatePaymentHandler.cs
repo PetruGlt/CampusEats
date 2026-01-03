@@ -62,8 +62,8 @@ public class CreatePaymentHandler(CampusEatsContext context)
             ClientReferenceId = request.OrderId.ToString(),
             Metadata = new Dictionary<string, string>
             {
-                { "order_id", request.OrderId.ToString() },
-                { "user_id", request.UserId }
+                { "order_id", request.OrderId.ToString()},
+                { "user_id", request.UserId.ToString()}
             }
         };
 

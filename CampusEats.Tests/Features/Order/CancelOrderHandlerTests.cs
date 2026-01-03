@@ -33,7 +33,7 @@ public class CancelOrderHandlerTests
             {
                 Id = orderId,
                 Status = OrderStatus.Pending,
-                UserId = "user1",
+                UserId = Guid.NewGuid(),
                 TotalAmount = 100,
                 Items = new List<OrderItemEntity> 
                 { 
@@ -85,7 +85,7 @@ public class CancelOrderHandlerTests
             {
                 Id = orderId,
                 Status = OrderStatus.Completed, 
-                UserId = "user1"
+                UserId = Guid.NewGuid()
             });
             await context.SaveChangesAsync();
         }

@@ -4,9 +4,9 @@ using BCrypt.Net;
 
 namespace CampusEats.Features.Users;
 
-public class CreateUserHandler(CampusEatsContext context, ILogger<CreateUserHandler> logger, IValidator<CreateUserRequest> validator)
+public class RegisterHandler(CampusEatsContext context, ILogger<RegisterHandler> logger, IValidator<RegisterRequest> validator)
 {
-    public async Task<IResult> Handler(CreateUserRequest request)
+    public async Task<IResult> Handler(RegisterRequest request)
     {
         logger.LogInformation($"Creating user: {request.Username} with email: {request.Email}");
 

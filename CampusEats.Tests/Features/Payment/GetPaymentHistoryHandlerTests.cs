@@ -7,6 +7,7 @@ namespace CampusEats.Tests.Features.Payment;
 
 public class GetPaymentHistoryHandlerTests
 {
+    private readonly Guid userId1 = Guid.NewGuid();
     private CampusEatsContext GetInMemoryContext(string dbName)
     {
         var options = new DbContextOptionsBuilder<CampusEatsContext>()
@@ -17,11 +18,13 @@ public class GetPaymentHistoryHandlerTests
 
     private async Task SeedDatabase(CampusEatsContext context)
     {
+        var userId2 = Guid.NewGuid();
+        var userId3 = Guid.NewGuid();
         context.Payments.AddRange(
             new global::Payment
             {
                 Id = Guid.NewGuid(),
-                UserId = "user1",
+                UserId = userId1,
                 Amount = 1000, // 10.00 USD
                 Status = PaymentStatus.Succeeded,
                 CreatedAt = DateTime.UtcNow.AddDays(-5)
@@ -29,7 +32,7 @@ public class GetPaymentHistoryHandlerTests
             new global::Payment
             {
                 Id = Guid.NewGuid(),
-                UserId = "user1",
+                UserId = userId2,
                 Amount = 2500, // 25.00 USD
                 Status = PaymentStatus.Failed,
                 CreatedAt = DateTime.UtcNow.AddDays(-2)
@@ -37,7 +40,7 @@ public class GetPaymentHistoryHandlerTests
             new global::Payment
             {
                 Id = Guid.NewGuid(),
-                UserId = "user2",
+                UserId = userId3,
                 Amount = 5000,
                 Status = PaymentStatus.Succeeded,
                 CreatedAt = DateTime.UtcNow
@@ -74,14 +77,14 @@ public class GetPaymentHistoryHandlerTests
         {
             await SeedDatabase(context);
             var handler = new GetPaymentHistoryHandler(context);
-            var request = new GetPaymentHistoryRequest("user1", null, null, null);
+            var request = new GetPaymentHistoryRequest(userId1.ToString(), null, null, null);
 
             // Act
             var result = await handler.Handle(request);
 
             // Assert
-            Assert.Equal(2, result.Count);
-            Assert.All(result, p => Assert.Equal("user1", p.UserId));
+            Assert.Equal(1, result.Count);
+            Assert.All(result, p => Assert.Equal(Guid.NewGuid(), p.UserId));
         }
     }
 

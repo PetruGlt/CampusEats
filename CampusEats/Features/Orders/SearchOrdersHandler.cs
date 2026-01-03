@@ -15,7 +15,6 @@ public class SearchOrdersHandler(CampusEatsContext context)
         {
             var searchTerm = request.Query.ToLower();
             query = query.Where(o => 
-                o.UserId.ToLower().Contains(searchTerm) ||
                 (o.Notes != null && o.Notes.ToLower().Contains(searchTerm)) ||
                 o.Items.Any(i => i.MenuItemName.ToLower().Contains(searchTerm))
             );

@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace CampusEats.Validators;
 
-public class CreateUserValidator : AbstractValidator<CreateUserRequest>
+public class CreateUserValidator : AbstractValidator<RegisterRequest>
 {
     public CreateUserValidator()
     {

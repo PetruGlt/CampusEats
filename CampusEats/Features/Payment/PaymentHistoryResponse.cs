@@ -6,7 +6,7 @@ public record PaymentHistoryResponse(
     long Amount,
     string Currency,
     string Status,
-    string UserId,
+    Guid UserId,
     DateTime CreatedAt,
     DateTime? CompletedAt,
     string? FailureReason,

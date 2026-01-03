@@ -4,5 +4,5 @@ namespace CampusEatsUI.Services.UserLoyalty;
 
 public interface IUserLoyaltyService
 {
-    public Task<UserPoints> GetUserLoyaltyPointsAsync(Guid id);
+    public Task<UserPoints> GetUserLoyaltyPointsAsync(Guid userId);
 }

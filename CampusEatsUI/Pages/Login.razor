@@ -1,11 +1,10 @@
 @page "/login"
 @using System.ComponentModel.DataAnnotations
-@using System.Text.Json
-@using System.Text.Json.Serialization
-@using CampusEatsUI.Models.DTOs
+@using CampusEatsUI.Models.Helpers
+@using CampusEatsUI.Services.Auth
 @inject NavigationManager NavigationManager
-@inject HttpClient Http
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
+@inject IAuthService AuthService;
 <h3>Login</h3>
 
 <div class="row">
@@ -14,9 +13,9 @@
             <DataAnnotationsValidator />
             <ValidationSummary />
             
-            @if (!string.IsNullOrEmpty(ErrorMessage))
+            @if (!string.IsNullOrEmpty(_errorMessage))
             {
-                <div class="alert alert-danger">@ErrorMessage</div>
+                <div class="alert alert-danger">@_errorMessage</div>
             }
 
             <div class="mb-3">
@@ -37,38 +36,38 @@
 
 @code {
     private InputModel Input { get; set; } = new();
-    private string? ErrorMessage;
+    private string? _errorMessage;
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
+        if (!string.IsNullOrEmpty(cookie))
+        {
+            var token = AuthService.GetTokenAsync(cookie);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
+    }
 
     private async Task OnValidSubmit()
     {
-        ErrorMessage = null;
+        _errorMessage = null;
 
-        var request = new GetUserByCredentialRequest(Input.Email, Input.Password);
+        var response = await AuthService.LoginAsync(Input.Email, Input.Password);
 
-        var response = await Http.PostAsJsonAsync("http://localhost:5168/users", request);
-        if (response.IsSuccessStatusCode)
+        if (response.Token != string.Empty)
         {
-            //Create a cookie consisting of ID username, email,
-            
-            var user = await response.Content.ReadFromJsonAsync<UserResponse>();
-            
-            var cookieData = new
-            {
-                Id = user?.Id,
-                Username = user?.Username,
-                Email = user?.Email
-            };
-            var jsonString = JsonSerializer.Serialize(cookieData);
-            var cookieValue = $"user_session={System.Net.WebUtility.UrlEncode(jsonString)}; max-age=3600; path=/; secure; samesite=strict";
-            
-            await JSRuntime.InvokeVoidAsync("eval", $"document.cookie = '{cookieValue}'");
-            
+            var cookieValue = $"authToken={response.Token}; max-age=3600; path=/; secure; samesite=strict";
+            await JsRuntime.InvokeVoidAsync("eval", $"document.cookie = '{cookieValue}'");
             NavigationManager.NavigateTo("/");
         }
         else
         {
-            Console.WriteLine(response);
-            ErrorMessage = $"Invalid login attempt. {response}";
+            _errorMessage = "Something went wrong";
         }
         
     }
@@ -81,12 +80,5 @@
 
         [Required]
         public string Password { get; set; } = string.Empty;
-    }
-    private class UserResponse
-    {
-        public Guid Id { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        //public string HashedPassword {get; set;} = string.Empty;
     }
 }

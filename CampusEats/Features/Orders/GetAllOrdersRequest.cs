@@ -1,3 +1,3 @@
 namespace CampusEats.Features.Orders;
 
-public record GetAllOrdersRequest(string? UserId = null);
+public record GetAllOrdersRequest(Guid? UserId);

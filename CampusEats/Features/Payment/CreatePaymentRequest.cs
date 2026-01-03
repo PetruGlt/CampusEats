@@ -2,7 +2,7 @@
 
 public record CreatePaymentRequest(
     Guid OrderId,
-    string UserId,
+    Guid UserId,
     string SuccessUrl,
     string CancelUrl
 );

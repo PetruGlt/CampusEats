@@ -27,7 +27,7 @@ public class GetUserPointsHandlerTests : IDisposable
     public async Task GivenUserWithLoyaltyRecord_WhenHandleCalled_ThenShouldReturnCorrectPoints()
     {
         // Arrange
-        var userId = Guid.NewGuid().ToString();
+        var userId = Guid.NewGuid();
         var expectedPoints = 150;
         var lastUpdate = DateTime.UtcNow;
 
@@ -63,7 +63,7 @@ public class GetUserPointsHandlerTests : IDisposable
     public async Task GivenUserWithNoHistory_WhenHandleCalled_ThenShouldReturnZeroPoints()
     {
         // Arrange
-        var userId = Guid.NewGuid().ToString();
+        var userId = Guid.NewGuid();
         await using var context = CreateContext();
 
         var loyaltyService = new LoyaltyService(context);

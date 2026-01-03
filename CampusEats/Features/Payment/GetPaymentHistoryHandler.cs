@@ -7,13 +7,12 @@ public class GetPaymentHistoryHandler(CampusEatsContext context)
 {
     public async Task<List<PaymentHistoryResponse>> Handle(GetPaymentHistoryRequest request)
     {
-        var query = context.Payments.AsQueryable();
+        var query =  context.Payments.AsNoTracking();
 
         // Filter by user
-        if (!string.IsNullOrWhiteSpace(request.UserId))
-        {
-            query = query.Where(p => p.UserId == request.UserId);
-        }
+        var userId = System.Guid.Parse(request.UserId);
+        query = query.Where(p => p.UserId == userId);
+        
 
         // Filter by date range
         if (request.StartDate.HasValue)
@@ -50,4 +49,3 @@ public class GetPaymentHistoryHandler(CampusEatsContext context)
         )).ToList();
     }
 }
-

@@ -12,7 +12,7 @@ public class LoyaltyService
         _context = context;
     }
 
-    public async Task<int> AddPointsForOrder(string userId, decimal orderAmount)
+    public async Task<int> AddPointsForOrder(Guid userId, decimal orderAmount)
     {
         // Award 10 points per dollar
         var pointsToAdd = (int)(orderAmount * 10);
@@ -42,7 +42,7 @@ public class LoyaltyService
         return pointsToAdd;
     }
 
-    public async Task<UserLoyalty?> GetUserLoyalty(string userId)
+    public async Task<UserLoyalty?> GetUserLoyalty(Guid userId)
     {
         return await _context.UserLoyalties
             .FirstOrDefaultAsync(ul => ul.UserId == userId);

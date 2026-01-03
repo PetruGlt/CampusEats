@@ -78,7 +78,7 @@ public class CreateOrderHandler(CampusEatsContext context)
 
 public record OrderResponse(
     Guid Id,
-    string UserId,
+    Guid UserId,
     List<OrderItemResponse> Items,
     string Status,
     decimal TotalAmount,

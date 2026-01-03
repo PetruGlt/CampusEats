@@ -9,12 +9,17 @@ using CampusEats.Features.Webhooks;
 using CampusEats.Mappings;
 using CampusEats.Middleware;
 using CampusEats.Persistence;
+using CampusEats.Service.Auth;
 using CampusEats.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Stripe;
+using System.Text;
+using TokenService = CampusEats.Services.Auth.TokenService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +42,29 @@ builder.Services.AddSwaggerGen(c =>
                 Url = new Uri("https://github.com/PetruGlt")
             }
         });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer Scheme. IE: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 // Add services to the container.
@@ -56,11 +84,33 @@ else
 }
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MenuItemMappingProfile>());
 
+//Register Auth Service
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"] ?? "CampusEats",
+            ValidAudience = builder.Configuration["JwtSettings:Audience"] ?? "CampusEatsUI",
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"] ??
+                                       "super_secret_key_must_be_at_least_32_chars"))
+        };
+    });
+builder.Services.AddAuthorization();
+
+
 // Register User handlers
-builder.Services.AddScoped<CreateUserHandler>();
+builder.Services.AddScoped<RegisterHandler>();
 builder.Services.AddScoped<GetAllUsersHandler>();
 builder.Services.AddScoped<GetUserByIdHandler>();
-builder.Services.AddScoped<GetUserByCredentialHandler>();
+builder.Services.AddScoped<LoginHandler>();
 builder.Services.AddScoped<UpdateUserHandler>();
 builder.Services.AddScoped<DeleteUserHandler>();
 
@@ -145,15 +195,26 @@ app.UseGlobalExceptionMiddleware();
 
 app.UseCors("AllowAll");
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 
-// User endpoints
+// Auth endpoints
 
-app.MapPost("/users/create", async (CreateUserRequest command, CreateUserHandler handler) =>
-    await handler.Handler(command))
-    .WithTags("Users")
-    .WithName("CreateUser")
+app.MapPost("/auth/register", async (RegisterRequest command, RegisterHandler handler) =>
+        await handler.Handler(command))
+    .WithTags("Auth")
+    .WithName("Register")
     .WithOpenApi();
+
+app.MapPost("/auth/login", async (LoginRequest command, LoginHandler handler) =>
+        await handler.Handle(command))
+    .WithTags("Auth")
+    .WithName("Login")
+    .WithOpenApi();
+
+// User endpoints
 
 app.MapGet("/users", async (GetAllUsersHandler handler) =>
     await handler.Handle(new GetAllUsersRequest()))
@@ -167,11 +228,6 @@ app.MapGet("/users/{id:guid}", async (Guid id, GetUserByIdHandler handler) =>
     .WithName("GetUserById")
     .WithOpenApi();
 
-app.MapPost("/users", async (GetUserByCredentialRequest command, GetUserByCredentialHandler handler) =>
-    await handler.Handle(command))
-    .WithTags("Users")
-    .WithName("GetUserByCredential")
-    .WithOpenApi();
 app.MapPut("/users/{id:guid}", async (Guid id, UpdateUserRequest command, UpdateUserHandler handler) =>
 {
     var updated = command with { Id = id };
@@ -236,7 +292,7 @@ app.MapPost("/orders", async (CreateOrderRequest request, CreateOrderHandler han
     .WithName("CreateOrder")
     .WithOpenApi();
 
-app.MapGet("/orders", async (string? userId, GetAllOrdersHandler handler) =>
+app.MapGet("/orders", async (Guid? userId, GetAllOrdersHandler handler) =>
 {
     var result = await handler.Handle(new GetAllOrdersRequest(userId));
     return Results.Ok(result);
@@ -263,7 +319,7 @@ app.MapPut("/orders/{id:guid}/cancel", async (Guid id, CancelOrderHandler handle
     .WithName("CancelOrder")
     .WithOpenApi();
 
-app.MapGet("/orders/history", async (DateTime? startDate, DateTime? endDate, string? userId, GetOrderHistoryHandler handler) =>
+app.MapGet("/orders/history", async (DateTime? startDate, DateTime? endDate, Guid userId, GetOrderHistoryHandler handler) =>
 {
     var result = await handler.Handle(new GetOrderHistoryRequest(startDate, endDate, userId));
     return Results.Ok(result);
@@ -356,7 +412,7 @@ app.MapPost("/payments/create-checkout", async (CreatePaymentRequest request, Cr
     .WithName("CreateCheckoutSession")
     .WithOpenApi();
 
-app.MapGet("/payments/history", async (string? userId, DateTime? startDate, DateTime? endDate, string? status, GetPaymentHistoryHandler handler) =>
+app.MapGet("/payments/history", async (string userId, DateTime? startDate, DateTime? endDate, string? status, GetPaymentHistoryHandler handler) =>
 {
     PaymentStatus? paymentStatus = null;
     if (!string.IsNullOrEmpty(status) && Enum.TryParse<PaymentStatus>(status, true, out var parsedStatus))
@@ -391,7 +447,7 @@ app.MapPost("/webhooks/stripe", async (HttpContext context, HandleStripeWebhook 
 });
 
 // Loyalty endpoint
-app.MapGet("/loyalty/{userId}", async (string userId, GetUserPointsHandler handler) =>
+app.MapGet("/loyalty/{userId:guid}", async (Guid userId, GetUserPointsHandler handler) =>
 {
     var result = await handler.Handle(new GetUserPointsRequest(userId));
     return Results.Ok(result);

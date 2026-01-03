@@ -1,6 +1,6 @@
 namespace CampusEats.Features.Users;
 
-public record GetUserByCredentialRequest(
+public record LoginRequest(
     string Email,
     string PlainPassword
     );

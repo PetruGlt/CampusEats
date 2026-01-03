@@ -1002,3 +1002,9 @@
 /home/mrbogdanovich/git/CampusEats/CampusEats.Tests/obj/Debug/net9.0/CampusEats.Tests.pdb
 /home/mrbogdanovich/git/CampusEats/CampusEats.Tests/obj/Debug/net9.0/CampusEats.Tests.genruntimeconfig.cache
 /home/mrbogdanovich/git/CampusEats/CampusEats.Tests/obj/Debug/net9.0/ref/CampusEats.Tests.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/bin/Debug/net9.0/DevOne.Security.Cryptography.BCrypt.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/bin/Debug/net9.0/BCrypt.Net-Next.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats.Tests/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll

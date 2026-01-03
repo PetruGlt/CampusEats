@@ -2,12 +2,12 @@ namespace CampusEatsUI.Models;
 
 public record Payments
 (
-    Guid Id,
+    Guid PaymentId,
     Guid OrderId,
     long Amount,
     string Currency,
     string Status,
-    Guid UserId,
+    string UserId,
     DateTime CreatedAt,
     DateTime? CompletedAt,
     string? FailureReason,

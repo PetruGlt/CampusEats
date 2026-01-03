@@ -1,6 +1,6 @@
 namespace CampusEats.Features.Users;
 
-public record CreateUserRequest(
+public record RegisterRequest(
     string Username,
     string Email,
     string Password

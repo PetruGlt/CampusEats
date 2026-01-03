@@ -1,7 +1,7 @@
 namespace CampusEats.Features.Orders;
 
 public record CreateOrderRequest(
-    string UserId,
+    Guid UserId,
     List<OrderItemDto> Items,
     string? Notes
 );

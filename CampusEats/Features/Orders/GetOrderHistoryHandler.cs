@@ -21,10 +21,8 @@ public class GetOrderHistoryHandler(CampusEatsContext context)
             query = query.Where(o => o.CreatedAt <= request.EndDate.Value);
         }
 
-        if (!string.IsNullOrEmpty(request.UserId))
-        {
-            query = query.Where(o => o.UserId == request.UserId);
-        }
+        query = query.Where(o => o.UserId == request.UserId);
+        
 
         var orders = await query
             .OrderByDescending(o => o.CreatedAt)

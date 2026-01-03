@@ -2,7 +2,7 @@
 
 public class UserPointsResponse
 {
-    public string UserId { get; set; } = string.Empty;
+    public Guid UserId { get; set; }
     public int Points { get; set; }
     public DateTime? LastUpdated { get; set; }
 }

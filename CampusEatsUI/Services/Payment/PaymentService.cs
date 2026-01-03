@@ -1,21 +1,29 @@
+using System.Net.Http.Json;
 using CampusEatsUI.Models;
+using CampusEatsUI.Models.Helpers;
+using CampusEatsUI.Models.Requests.Payment;
 
 namespace CampusEatsUI.Services.Payment;
 
 public class PaymentService(HttpClient _http) : IPaymentService
 {
-    public void CreateCheckoutSessionAsync(Guid id, Guid userId, string successUrl, string cancelUrl)
+    
+    private const string BaseUrl = "http://localhost:5168/payments";
+    public async Task CreateCheckoutSessionAsync(Guid orderId, Guid userId, string successUrl, string cancelUrl)
     {
-        throw new NotImplementedException();
+        var request = new CreateCheckoutSessionRequest(orderId, userId, successUrl, cancelUrl);
+        await _http.PostAsJsonAsync($"{BaseUrl}/create-checkout", request);
     }
 
-    public Task<List<Payments>> GetPaymentHistoryAsync(Guid userId, DateTime startDate, DateTime endDate, string status)
+    public async Task<List<PaymentHistoryResponse>> GetPaymentHistoryAsync(string userId, DateTime startDate, DateTime endDate,
+        string status)
     {
-        throw new NotImplementedException();
+        var results = await _http.GetFromJsonAsync<List<PaymentHistoryResponse>>($"{BaseUrl}/history?userId={userId}");
+        return results;
     }
 
-    public Task<Payments> GetPaymentByIdAsync(Guid id)
+    public async Task<Payments> GetPaymentByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _http.GetFromJsonAsync<Payments>($"{BaseUrl}/{id}")!;
     }
 }

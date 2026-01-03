@@ -1,41 +1,73 @@
 @page "/loyalty"
-@using CampusEatsUI.Models.DTOs
-@inject HttpClient Http
+@using CampusEatsUI.Models.Helpers
+@using CampusEatsUI.Services.Auth
+@using CampusEatsUI.Services.UserLoyalty
+@inject NavigationManager NavigationManager
+@inject IUserLoyaltyService UserLoyaltyService
+@inject IAuthService AuthService;
+@inject IJSRuntime JsRuntime;
 
 <h3>Loyalty Program</h3>
 
 <div class="card text-center w-50 mx-auto mt-5">
-    <div class="card-header">
-        Check Your Points
-    </div>
     <div class="card-body">
-        <h5 class="card-title">Enter your User ID</h5>
-        <input @bind="userId" class="form-control mb-3" placeholder="e.g. user123" />
-        <button class="btn btn-primary" @onclick="CheckPoints">Check Points</button>
-        
-        @if (points.HasValue)
+        @if (points == null)
+        {
+            <p>Loading...</p>
+        }
+        else if (points.Points != 0)
         {
             <div class="mt-4">
-                <h1 class="display-1 text-warning">@points</h1>
-                <p class="lead">Points Available</p>
+                <h5>You have @points.Points 😃</h5>
+                <p>Use your loyalty points to get 25% discount</p>
             </div>
         }
+        else
+        {
+            <div class="mt-4">
+                <h5>You have no points ☹️</h5>
+            </div>
+        }
+        
+        <button class="btn btn-primary mt-4" @onclick="RedirectToMenu">Menu</button>
     </div>
 </div>
 @code {
-    private string userId = "user123";
-    private int? points;
+    private UserSession _user;
+    private UserPoints points;
 
-    private async Task CheckPoints()
+    protected override async Task OnInitializedAsync()
     {
         try
         {
-            var result = await Http.GetFromJsonAsync<UserPointsDto>($"http://localhost:5168/loyalty/{userId}");
-            points = result?.Points;
+            var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
+            if (!string.IsNullOrEmpty(cookie))
+            {
+                var token = AuthService.GetTokenAsync(cookie);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    _user = AuthService.ParseJwt(token);
+                    points = await UserLoyaltyService.GetUserLoyaltyPointsAsync(_user.Id);
+                    Console.WriteLine(points);
+                }
+                else
+                {
+                    NavigationManager.NavigateTo("/login");
+                }
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/login");
+            }
         }
-        catch 
+        catch (Exception ex)
         {
-            points = 0;
+            Console.WriteLine($"Error loading loyalty points: {ex.Message}");
         }
+    }
+    
+    private void RedirectToMenu()
+    {
+        NavigationManager.NavigateTo("/menu");
     }
 }

@@ -1,6 +1,6 @@
 namespace CampusEatsUI.Models.Helpers;
 
 public record UserPoints(
-    Guid Id,
+    Guid UserId,
     int Points,
-    DateTime LastUpdate);
+    DateTime LastUpdated);

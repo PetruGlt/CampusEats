@@ -17,7 +17,7 @@ public class CreateOrderValidatorTests : IDisposable
     [Fact]
     public void GivenEmptyUserId_WhenValidating_ThenShouldReturnError()
     {
-        var order = new CreateOrderRequest(string.Empty , new List<OrderItemDto>
+        var order = new CreateOrderRequest(Guid.Empty , new List<OrderItemDto>
         {
             new (Guid.NewGuid(), 1, null)
         }, null);
@@ -30,7 +30,7 @@ public class CreateOrderValidatorTests : IDisposable
     [Fact]
     public void GivenEmptyOrderItemList_WhenValidating_ThenShouldReturnError()
     {
-        var order = new CreateOrderRequest("testing" , null, null);
+        var order = new CreateOrderRequest(Guid.NewGuid() , null, null);
 
         var result = _sut.TestValidate(order);
         result.IsValid.Should().BeFalse();
@@ -40,7 +40,7 @@ public class CreateOrderValidatorTests : IDisposable
     [Fact]
     public void GivenListOfInvalidOrderItems_WhenValidating_ThenShouldReturnErrors()
     {
-        var order = new CreateOrderRequest("testing" , new List<OrderItemDto>
+        var order = new CreateOrderRequest(Guid.NewGuid() , new List<OrderItemDto>
         {
             new (Guid.Empty, 1, null), //Invalid MenuItemId
             new (Guid.NewGuid(), -1, null) //Invalid Quantity

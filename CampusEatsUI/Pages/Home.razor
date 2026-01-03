@@ -1,20 +1,18 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
-@using System.Text.Json
+@inject IJSRuntime JsRuntime
+@using CampusEatsUI.Models.Helpers
+@inject Services.Auth.IAuthService AuthService;
 
 <h3>CampusEats.net</h3>
 <p>Enjoy out thoughtfully crafted slop</p>
 
-@if (User != null)
+@if (_user != null)
 {
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Welcome, @User.Username</h5>
-            <p class="card-text"><strong>User ID:</strong> @User.Id</p>
-            <p class="card-text"><strong>Email:</strong> @User.Email</p>
-            <button class="btn btn-danger mt-3" @onclick="Logout">Logout</button>
-        </div>
+    <div>
+        <h5>Welcome back @_user.Username</h5>
+        <p>Enjoy your stay</p>
+        <button class="btn btn-danger mt-3" @onclick="Logout">Logout</button>
     </div>
 }
 else
@@ -24,38 +22,30 @@ else
 }
 
 @code {
-    private UserSession? User;
+    private UserSession? _user;
 
     protected override async Task OnInitializedAsync()
     {
-        var cookie = await JSRuntime.InvokeAsync<string>("eval", "document.cookie");
+        var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
         if (!string.IsNullOrEmpty(cookie))
         {
-            var cookies = cookie.Split(';');
-            var sessionCookie = cookies.FirstOrDefault(c => c.Trim().StartsWith("user_session="));
-            if (!string.IsNullOrEmpty(sessionCookie))
+            var token = AuthService.GetTokenAsync(cookie);
+
+            try
             {
-                var jsonString = sessionCookie.Split('=')[1];
-                try 
-                {
-                    var decodedJson = System.Net.WebUtility.UrlDecode(jsonString);
-                    User = JsonSerializer.Deserialize<UserSession>(decodedJson);
-                }
-                catch { /* Ignore invalid cookie */ }
+                _user = AuthService.ParseJwt(token);
+            }
+            catch
+            {
+                _user = null;
             }
         }
     }
 
     private async Task Logout()
     {
-        await JSRuntime.InvokeVoidAsync("eval", "document.cookie = 'user_session=; max-age=0; path=/; secure; samesite=strict'");
-        NavigationManager.NavigateTo("/");
-    }
-
-    private class UserSession
-    {
-        public Guid Id { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
+        await AuthService.LogoutAsync();
+        _user = null;
+        NavigationManager.Refresh();
     }
 }

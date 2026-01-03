@@ -22,7 +22,7 @@ public class CreateOrderHandlerTests : IDisposable
 
         var handler = new CreateOrderHandler(context);
         var request = new CreateOrderRequest(
-            UserId: "user123",
+            UserId: Guid.NewGuid(),
             Items: new List<OrderItemDto>
             {
                 new (MenuItemId: menuItem1.Id, Quantity: 2, SpecialInstructions: "No onions"),
@@ -50,7 +50,7 @@ public class CreateOrderHandlerTests : IDisposable
         var context = ContextHelper.CreateInMemoryDBContext();
         var handler = new CreateOrderHandler(context);
         var request = new CreateOrderRequest(
-            UserId: "user123",
+            UserId: Guid.NewGuid(),
             Items: new List<OrderItemDto>
             {
                 new (MenuItemId: Guid.NewGuid(), Quantity: 2, SpecialInstructions: null)
