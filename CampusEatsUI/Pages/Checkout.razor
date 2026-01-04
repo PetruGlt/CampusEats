@@ -1,14 +1,17 @@
 @page "/checkout"
 @using CampusEatsUI.Models
+@using CampusEatsUI.Models.Helpers
 @using CampusEatsUI.Services.Helpers
 @using CampusEatsUI.Services.Menu
 @using CampusEatsUI.Services.Orders
 @using CampusEatsUI.Services.Payment
+@using CampusEatsUI.Services.UserLoyalty
 @inject IOrderService OrderService
 @inject CartState CartState
 @inject IMenuService MenuService;
 @inject IPaymentService PaymentService;
 @inject NavigationManager NavigationManager;
+@inject IUserLoyaltyService UserLoyaltyService;
 
 <h3>Order Details</h3>
 
@@ -30,9 +33,20 @@
                     </li>
                 }
             }
+            @if (_loyalties?.Points > 0)
+            {
+                <li class="list-group-item">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="useLoyaltyPoints" @bind="_useLoyaltyPoints">
+                        <label class="form-check-label" for="useLoyaltyPoints">
+                            Use Loyalty Points (25% Discount)
+                        </label>
+                    </div>
+                </li>
+            }
             <li class="list-group-item d-flex justify-content-between">
                 <strong>Total</strong>
-                <strong>@CartState.CartItems.Sum(c => (_menuItems.FirstOrDefault(m => m.Id == c.MenuItemId)?.Price ?? 0) * c.Quantity).ToString("C")</strong>
+                <strong>@GetTotal().ToString("C")</strong>
             </li>
         </ul>
     </div>
@@ -41,10 +55,19 @@
 
 @code {
     private List<MenuItem> _menuItems = new();
+    private UserPoints _loyalties;
+    private bool _useLoyaltyPoints;
 
     protected override async Task OnInitializedAsync()
     {
         _menuItems = await MenuService.GetAllMenuItemsAsync();
+        _loyalties = await UserLoyaltyService.GetUserLoyaltyPointsAsync(CartState.UserId);
+    }
+
+    private decimal GetTotal()
+    {
+        var total = CartState.CartItems.Sum(c => (_menuItems.FirstOrDefault(m => m.Id == c.MenuItemId)?.Price ?? 0) * c.Quantity);
+        return _useLoyaltyPoints ? total * 0.75m : total;
     }
 
     private async Task Pay()
