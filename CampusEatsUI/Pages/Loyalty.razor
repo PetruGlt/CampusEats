@@ -4,7 +4,7 @@
 @using CampusEatsUI.Services.UserLoyalty
 @inject NavigationManager NavigationManager
 @inject IUserLoyaltyService UserLoyaltyService
-@inject IAuthService AuthService;
+@inject IAuthenticationService AuthenticationService;
 @inject IJSRuntime JsRuntime;
 
 <h3>Loyalty Program</h3>
@@ -43,10 +43,10 @@
             var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
             if (!string.IsNullOrEmpty(cookie))
             {
-                var token = AuthService.GetTokenAsync(cookie);
+                var token = AuthenticationService.GetTokenAsync(cookie);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    _user = AuthService.ParseJwt(token);
+                    _user = AuthenticationService.ParseJwt(token);
                     points = await UserLoyaltyService.GetUserLoyaltyPointsAsync(_user.Id);
                     Console.WriteLine(points);
                 }

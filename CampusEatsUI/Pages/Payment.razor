@@ -5,7 +5,7 @@
 @using CampusEatsUI.Services.Payment
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
-@inject IAuthService AuthService
+@inject IAuthenticationService AuthenticationService
 @inject NavigationManager Navigation
 @inject IPaymentService PaymentService
 
@@ -69,11 +69,11 @@
         var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
         if (!string.IsNullOrEmpty(cookie))
         {
-            var token = AuthService.GetTokenAsync(cookie);
+            var token = AuthenticationService.GetTokenAsync(cookie);
 
             try
             {
-                _user = AuthService.ParseJwt(token);
+                _user = AuthenticationService.ParseJwt(token);
                 await LoadPayments();
             }
             catch

@@ -9,7 +9,7 @@
 @inject IJSRuntime JsRuntime
 @inject IMenuService MenuService;
 @inject IOrderService OrderServices;
-@inject IAuthService AuthService;
+@inject IAuthenticationService AuthenticationService;
 @inject CartState CartState;
 <h3>Today's Specialty</h3>
 
@@ -80,11 +80,11 @@
         var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
         if (!string.IsNullOrEmpty(cookie))
         {
-            var token = AuthService.GetTokenAsync(cookie);
+            var token = AuthenticationService.GetTokenAsync(cookie);
 
             try
             {
-                _user = AuthService.ParseJwt(token);
+                _user = AuthenticationService.ParseJwt(token);
                 await GetMenuItemsAsync();
             }
             catch

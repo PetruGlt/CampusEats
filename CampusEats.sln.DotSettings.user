@@ -2,6 +2,7 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AAuthenticationMiddleware_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003Ff8ca5be75154b04f70b1cca13ec3aa13db1047937aafc852e21fc8f50d822d8_003FAuthenticationMiddleware_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AAuthorizationMiddleware_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fd562c132b2b09bb93469fd291d356db8c62af45767583f4dac8907177e4dec0_003FAuthorizationMiddleware_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADeveloperExceptionPageMiddlewareImpl_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003Ff79973a76de799f7cf6d3c8b4a21f1e13611b9dcf6fb06bb7992571b7674c_003FDeveloperExceptionPageMiddlewareImpl_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExceptionDispatchInfo_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F2df1061e8e324fe2b35903fa0e3290ffed7908_003F42_003F9d24e483_003FExceptionDispatchInfo_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ARequestDelegateFactory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F8ed35d6c2819e04ca78be5829523271950ff45a84d609a837ef80d86ff592_003FRequestDelegateFactory_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASwaggerMiddleware_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fd0634efa98fd6efbac971d8acf8dd1e0411a666ab14d36c83ff2d5325679fc_003FSwaggerMiddleware_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASwaggerUIMiddleware_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fbb2a58662b43e142247c5f6e5add15117e0a2b99836b89370a1b9c16e33c_003FSwaggerUIMiddleware_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
@@ -14,6 +15,21 @@
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5f4c42d8_002D9aa6_002D43ae_002Da3d4_002D0e4abb30cb20/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CreateMenuItemHandlerTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;ProjectFile&gt;FCDC0DF1-7897-47FC-B97D-CB5045BEB10F/d:Features/d:Menus/f:CreateMenuItemHandlerTests.cs&lt;/ProjectFile&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6cb4ff9e_002D3ee3_002D48e4_002Daad1_002D72dd8f99d000/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="HomeUiTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.Tests.HomeUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.LoginUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.RegisterUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.HomeUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.MenuUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.CheckoutUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.OrdersUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.OrderDetailsUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.PaymentUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.KitchenUiTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D7193E1E-729B-4B10-B88A-77D8189BEC82::net10.0::CampusEatsUI.UI.LoyaltyUiTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6f22b48f_002Dc2ee_002D46c5_002Db3f5_002D88a36a09bf50/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateMenuItemHandlerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;

@@ -4,7 +4,7 @@
 @using CampusEatsUI.Services.Auth
 @inject NavigationManager NavigationManager
 @inject IOrderService OrderService;
-@inject IAuthService AuthService;
+@inject IAuthenticationService AuthenticationService;
 @inject IJSRuntime JsRuntime;
 @inject NavigationManager Navigation;
 
@@ -113,11 +113,11 @@
         var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
         if (!string.IsNullOrEmpty(cookie))
         {
-            var token = AuthService.GetTokenAsync(cookie);
+            var token = AuthenticationService.GetTokenAsync(cookie);
 
             try
             {
-                _user = AuthService.ParseJwt(token);
+                _user = AuthenticationService.ParseJwt(token);
                 await LoadOrders();
             }
             catch

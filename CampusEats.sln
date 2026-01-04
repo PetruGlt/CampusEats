@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusEatsUI", "CampusEatsU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusEats.Tests", "CampusEats.Tests\CampusEats.Tests.csproj", "{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusEatsUi.Tests", "CampusEatsUi.Tests\CampusEatsUi.Tests.csproj", "{D7193E1E-729B-4B10-B88A-77D8189BEC82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCDC0DF1-7897-47FC-B97D-CB5045BEB10F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7193E1E-729B-4B10-B88A-77D8189BEC82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7193E1E-729B-4B10-B88A-77D8189BEC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7193E1E-729B-4B10-B88A-77D8189BEC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7193E1E-729B-4B10-B88A-77D8189BEC82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

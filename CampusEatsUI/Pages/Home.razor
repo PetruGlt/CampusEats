@@ -1,11 +1,12 @@
 ﻿@page "/"
+@using CampusEatsUI.Models.Helpers
+@using CampusEatsUI.Services.Auth
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
-@using CampusEatsUI.Models.Helpers
-@inject Services.Auth.IAuthService AuthService;
+@inject IAuthenticationService AuthenticationService;
 
 <h3>CampusEats.net</h3>
-<p>Enjoy out thoughtfully crafted slop</p>
+<p>Enjoy our thoughtfully crafted slop</p>
 
 @if (_user != null)
 {
@@ -29,11 +30,11 @@ else
         var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
         if (!string.IsNullOrEmpty(cookie))
         {
-            var token = AuthService.GetTokenAsync(cookie);
+            var token = AuthenticationService.GetTokenAsync(cookie);
 
             try
             {
-                _user = AuthService.ParseJwt(token);
+                _user = AuthenticationService.ParseJwt(token);
             }
             catch
             {
@@ -44,7 +45,7 @@ else
 
     private async Task Logout()
     {
-        await AuthService.LogoutAsync();
+        await AuthenticationService.LogoutAsync();
         _user = null;
         NavigationManager.Refresh();
     }

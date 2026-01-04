@@ -4,7 +4,7 @@
 @using CampusEatsUI.Services.Auth
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
-@inject IAuthService AuthService;
+@inject IAuthenticationService AuthenticationService;
 <h3>Login</h3>
 
 <div class="row">
@@ -44,7 +44,7 @@
         var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
         if (!string.IsNullOrEmpty(cookie))
         {
-            var token = AuthService.GetTokenAsync(cookie);
+            var token = AuthenticationService.GetTokenAsync(cookie);
 
             if (!string.IsNullOrEmpty(token))
             {
@@ -57,7 +57,7 @@
     {
         _errorMessage = null;
 
-        var response = await AuthService.LoginAsync(Input.Email, Input.Password);
+        var response = await AuthenticationService.LoginAsync(Input.Email, Input.Password);
 
         if (response.Token != string.Empty)
         {

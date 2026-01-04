@@ -33,7 +33,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 //Auxiliary Services (Authentication, Stripe, Order Images Handling) 
 
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<CartState>();
 
 await builder.Build().RunAsync();

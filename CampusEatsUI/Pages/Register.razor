@@ -1,7 +1,7 @@
 @page "/register"
 @using CampusEatsUI.Services.Auth
 @inject NavigationManager NavigationManager
-@inject IAuthService AuthService;
+@inject IAuthenticationService AuthenticationService;
 @inject IJSRuntime JsRuntime;
 
 <h3>Register</h3>
@@ -55,7 +55,7 @@
         var cookie = await JsRuntime.InvokeAsync<string>("eval", "document.cookie");
         if (!string.IsNullOrEmpty(cookie))
         {
-            var token = AuthService.GetTokenAsync(cookie);
+            var token = AuthenticationService.GetTokenAsync(cookie);
 
             if (!string.IsNullOrEmpty(token))
             {
@@ -70,7 +70,7 @@
 
         if (Input.Password == Input.ConfirmPassword)
         {
-            await AuthService.RegisterAsync(Input.Username, Input.Email, Input.Password);
+            await AuthenticationService.RegisterAsync(Input.Username, Input.Email, Input.Password);
             NavigationManager.NavigateTo("/login");
         }
         else
