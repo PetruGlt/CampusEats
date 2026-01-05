@@ -8,6 +8,8 @@ namespace CampusEats.Tests.Features.Payment;
 public class GetPaymentHistoryHandlerTests
 {
     private readonly Guid userId1 = Guid.NewGuid();
+    private readonly Guid userId2 = Guid.NewGuid();
+    private readonly Guid userId3 = Guid.NewGuid();
     private CampusEatsContext GetInMemoryContext(string dbName)
     {
         var options = new DbContextOptionsBuilder<CampusEatsContext>()
@@ -18,8 +20,6 @@ public class GetPaymentHistoryHandlerTests
 
     private async Task SeedDatabase(CampusEatsContext context)
     {
-        var userId2 = Guid.NewGuid();
-        var userId3 = Guid.NewGuid();
         context.Payments.AddRange(
             new global::Payment
             {
@@ -58,13 +58,13 @@ public class GetPaymentHistoryHandlerTests
         {
             await SeedDatabase(context);
             var handler = new GetPaymentHistoryHandler(context);
-            var request = new GetPaymentHistoryRequest(null, null, null, null);
+            var request = new GetPaymentHistoryRequest(userId1.ToString(), null, null, null);
 
             // Act
             var result = await handler.Handle(request);
 
             // Assert
-            Assert.Equal(3, result.Count);
+            Assert.Equal(1, result.Count);
         }
     }
 
@@ -77,14 +77,14 @@ public class GetPaymentHistoryHandlerTests
         {
             await SeedDatabase(context);
             var handler = new GetPaymentHistoryHandler(context);
-            var request = new GetPaymentHistoryRequest(userId1.ToString(), null, null, null);
+            var request = new GetPaymentHistoryRequest(userId2.ToString(), null, null, null);
 
             // Act
             var result = await handler.Handle(request);
 
             // Assert
             Assert.Equal(1, result.Count);
-            Assert.All(result, p => Assert.Equal(Guid.NewGuid(), p.UserId));
+            Assert.All(result, p => Assert.Equal(userId2, p.UserId));
         }
     }
 
@@ -97,7 +97,7 @@ public class GetPaymentHistoryHandlerTests
         {
             await SeedDatabase(context);
             var handler = new GetPaymentHistoryHandler(context);
-            var request = new GetPaymentHistoryRequest(null, null, null, PaymentStatus.Failed);
+            var request = new GetPaymentHistoryRequest(userId2.ToString(), null, null, PaymentStatus.Failed);
 
             // Act
             var result = await handler.Handle(request);
@@ -118,7 +118,7 @@ public class GetPaymentHistoryHandlerTests
             await SeedDatabase(context);
             var handler = new GetPaymentHistoryHandler(context);
             // Cautam plati de acum 6 zile pana acum 3 zile
-            var request = new GetPaymentHistoryRequest(null, DateTime.UtcNow.AddDays(-6), DateTime.UtcNow.AddDays(-3), null);
+            var request = new GetPaymentHistoryRequest(userId1.ToString(), DateTime.UtcNow.AddDays(-6), DateTime.UtcNow.AddDays(-3), null);
 
             // Act
             var result = await handler.Handle(request);

@@ -9,6 +9,9 @@ namespace CampusEats.Tests.Features.Order;
 
 public class SearchOrdersHandlerTests
 {
+    private readonly Guid userId1 = Guid.NewGuid();
+    private readonly Guid userId2 = Guid.NewGuid();
+    private readonly Guid userId3 = Guid.NewGuid();
     private CampusEatsContext GetInMemoryContext(string dbName)
     {
         var options = new DbContextOptionsBuilder<CampusEatsContext>()
@@ -23,7 +26,7 @@ public class SearchOrdersHandlerTests
             new OrderEntity
             {
                 Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UserId = userId1,
                 Status = OrderStatus.Pending,
                 Notes = "Leave at door",
                 CreatedAt = DateTime.UtcNow.AddMinutes(-10),
@@ -35,7 +38,7 @@ public class SearchOrdersHandlerTests
             new OrderEntity
             {
                 Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UserId = userId2,
                 Status = OrderStatus.Completed,
                 Notes = null,
                 CreatedAt = DateTime.UtcNow.AddMinutes(-20),
@@ -47,7 +50,7 @@ public class SearchOrdersHandlerTests
             new OrderEntity
             {
                 Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UserId = userId3,
                 Status = OrderStatus.Cancelled,
                 Notes = "Changed mind",
                 CreatedAt = DateTime.UtcNow.AddMinutes(-5),
@@ -91,14 +94,14 @@ public class SearchOrdersHandlerTests
             await SeedDatabase(context);
             var handler = new SearchOrdersHandler(context);
             // Cautam dupa o parte din ID-ul utilizatorului ("jane")
-            var request = new SearchOrdersRequest("jane", null); 
+            var request = new SearchOrdersRequest(userId1.ToString(), null); 
 
             // Act
             var result = await handler.Handle(request);
 
             // Assert
             Assert.Single(result);
-            Assert.Equal(Guid.NewGuid(), result.First().UserId);
+            Assert.Equal(userId1, result.First().UserId);
         }
     }
 

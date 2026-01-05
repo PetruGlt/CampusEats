@@ -22,11 +22,12 @@ public class GetOrderHistoryHandlerTests
     {
         // Arrange
         var dbName = Guid.NewGuid().ToString();
+        var userId = Guid.NewGuid();
         using (var context = GetInMemoryContext(dbName))
         {
             context.Orders.AddRange(
-                new OrderEntity { Id = Guid.NewGuid(), UserId = Guid.NewGuid(), CreatedAt = DateTime.UtcNow },
-                new OrderEntity { Id = Guid.NewGuid(), UserId = Guid.NewGuid(), CreatedAt = DateTime.UtcNow }
+                new OrderEntity { Id = Guid.NewGuid(), UserId = userId, CreatedAt = DateTime.UtcNow },
+                new OrderEntity { Id = Guid.NewGuid(), UserId = userId, CreatedAt = DateTime.UtcNow }
             );
             await context.SaveChangesAsync();
         }
@@ -34,7 +35,7 @@ public class GetOrderHistoryHandlerTests
         using (var context = GetInMemoryContext(dbName))
         {
             var handler = new GetOrderHistoryHandler(context);
-            var request = new GetOrderHistoryRequest(null, null, Guid.NewGuid());
+            var request = new GetOrderHistoryRequest(null, null, userId);
 
             // Act
             var result = await handler.Handle(request);
@@ -78,13 +79,14 @@ public class GetOrderHistoryHandlerTests
     {
         // Arrange
         var dbName = Guid.NewGuid().ToString();
+        var userId = Guid.NewGuid();
         var today = DateTime.UtcNow;
         using (var context = GetInMemoryContext(dbName))
         {
             context.Orders.AddRange(
-                new OrderEntity { Id = Guid.NewGuid(), UserId = Guid.NewGuid(), CreatedAt = today.AddDays(-5) }, // Prea veche
-                new OrderEntity { Id = Guid.NewGuid(), UserId = Guid.NewGuid(), CreatedAt = today.AddDays(-2) }, // Buna
-                new OrderEntity { Id = Guid.NewGuid(), UserId = Guid.NewGuid(), CreatedAt = today.AddDays(1) }   // Prea noua
+                new OrderEntity { Id = Guid.NewGuid(), UserId = userId, CreatedAt = today.AddDays(-5) }, // Prea veche
+                new OrderEntity { Id = Guid.NewGuid(), UserId = userId, CreatedAt = today.AddDays(-2) }, // Buna
+                new OrderEntity { Id = Guid.NewGuid(), UserId = userId, CreatedAt = today.AddDays(1) }   // Prea noua
             );
             await context.SaveChangesAsync();
         }
@@ -93,7 +95,7 @@ public class GetOrderHistoryHandlerTests
         {
             var handler = new GetOrderHistoryHandler(context);
             // Cautam comenzi intre acum 3 zile si acum 1 zi
-            var request = new GetOrderHistoryRequest(today.AddDays(-3), today.AddDays(-1), Guid.Empty);
+            var request = new GetOrderHistoryRequest(today.AddDays(-3), today.AddDays(-1), userId);
 
             // Act
             var result = await handler.Handle(request);
