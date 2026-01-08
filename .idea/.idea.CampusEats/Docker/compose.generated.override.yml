@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  campuseats.tests:
+    build:
+      context: "/home/mrbogdanovich/git/CampusEats"
+      dockerfile: "CampusEats.Tests/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/CampusEats.Tests.dll"
+    environment:
+      DOTNET_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "campuseats.tests:dev"
+    ports: []
+    volumes:
+    - "/home/mrbogdanovich/git/CampusEats/CampusEats.Tests:/app:rw"
+    - "/home/mrbogdanovich/git/CampusEats:/src:rw"
+    - "/home/mrbogdanovich/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
