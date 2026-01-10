@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "CampusEatsUI",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-gq1ovmfuTCnt7ox5Fh2d5rCKH0PJllgXmrxKi4ME+9Y=",
+    "hash": "sha256-UpgRvLZNKuoi5c6iLo6m9x+vPkGs2vFXHqS+sI1uItI=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -74,8 +74,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "bunit.wasm",
-        "name": "bunit.m4shj760nx.wasm",
-        "integrity": "sha256-WogcEviCRM+AZJ1GC+GJvYjWQT++vcnxiuAaDQrxkyw="
+        "name": "bunit.94xxplk7ao.wasm",
+        "integrity": "sha256-F62sRvSxh2/DM9Y113W/9fVFwUXzb1yym0oc49FS74k="
       },
       {
         "virtualPath": "Castle.Core.wasm",
@@ -1124,15 +1124,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "CampusEatsUI.wasm",
-        "name": "CampusEatsUI.jneripnv4j.wasm",
-        "integrity": "sha256-7whP0Ep9kWRt1Knt7wDW5raSMJs1dXWxlafPsFo4YVk="
+        "name": "CampusEatsUI.okudj7qwx8.wasm",
+        "integrity": "sha256-+BQkGSG02FC0iwzZZ3glikWRpcAvmxDxRuufhzdXOgk="
       }
     ],
     "pdb": [
       {
         "virtualPath": "CampusEatsUI.pdb",
-        "name": "CampusEatsUI.n0tn9h3owy.pdb",
-        "integrity": "sha256-p6/H5X4tmBtV+gcYaBOx9ne1E57CsEVdzUlnnToYV0s="
+        "name": "CampusEatsUI.8r2djjlove.pdb",
+        "integrity": "sha256-NL6TIjhncYpXu66fK97UlvyuEnLU3g3uV0oTjWg1UlA="
       }
     ],
     "libraryInitializers": [

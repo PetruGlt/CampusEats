@@ -1,21 +1,39 @@
 # This is a generated file. Not intended for manual editing.
 services:
-  campuseats.tests:
+  campuseats:
     build:
       context: "/home/mrbogdanovich/git/CampusEats"
-      dockerfile: "CampusEats.Tests/Dockerfile"
+      dockerfile: "CampusEats/Dockerfile"
       target: "base"
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net9.0/CampusEats.Tests.dll"
+    - "/app/bin/Debug/net10.0/CampusEats.dll"
     environment:
-      DOTNET_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "campuseats.tests:dev"
+    image: "campuseats:dev"
     ports: []
     volumes:
-    - "/home/mrbogdanovich/git/CampusEats/CampusEats.Tests:/app:rw"
+    - "/home/mrbogdanovich/git/CampusEats/CampusEats:/app:rw"
+    - "/home/mrbogdanovich/git/CampusEats:/src:rw"
+    - "/home/mrbogdanovich/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  campuseatsui:
+    build:
+      context: "/home/mrbogdanovich/git/CampusEats"
+      dockerfile: "CampusEatsUI/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/../../../.nuget/packages/microsoft.aspnetcore.components.webassembly.devserver/10.0.1/tools/blazor-devserver.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "campuseatsui:dev"
+    ports: []
+    volumes:
+    - "/home/mrbogdanovich/git/CampusEats/CampusEatsUI:/app:rw"
     - "/home/mrbogdanovich/git/CampusEats:/src:rw"
     - "/home/mrbogdanovich/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"

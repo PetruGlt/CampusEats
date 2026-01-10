@@ -223,3 +223,5 @@
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net10.0/runtimes/linux-musl-riscv64/native/libe_sqlite3.so
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net10.0/runtimes/linux-riscv64/native/libe_sqlite3.so
 /home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net10.0/runtimes/win/lib/net9.0/System.Windows.Extensions.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net10.0/Npgsql.dll
+/home/mrbogdanovich/git/CampusEats/CampusEats/bin/Debug/net10.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll

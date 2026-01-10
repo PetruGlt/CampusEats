@@ -16,9 +16,10 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.OpenApi;
 using Stripe;
 using System.Text;
+using Microsoft.OpenApi;
 using TokenService = CampusEats.Services.Auth.TokenService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,7 +52,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer"
     });
     
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    /*c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
@@ -64,7 +65,7 @@ builder.Services.AddSwaggerGen(c =>
             },
             Array.Empty<string>()
         }
-    });
+    });*/
 });
 
 // Add services to the container.
@@ -79,8 +80,9 @@ if (builder.Environment.IsEnvironment("Testing"))
 }
 else
 {
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<CampusEatsContext>(options =>
-        options.UseSqlite("Data Source = CampusEats.db"));
+        options.UseNpgsql(connectionString));
 }
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MenuItemMappingProfile>());
 
@@ -205,28 +207,24 @@ app.UseHttpsRedirection();
 app.MapPost("/auth/register", async (RegisterRequest command, RegisterHandler handler) =>
         await handler.Handler(command))
     .WithTags("Auth")
-    .WithName("Register")
-    .WithOpenApi();
+    .WithName("Register");
 
 app.MapPost("/auth/login", async (LoginRequest command, LoginHandler handler) =>
         await handler.Handle(command))
     .WithTags("Auth")
-    .WithName("Login")
-    .WithOpenApi();
+    .WithName("Login");
 
 // User endpoints
 
 app.MapGet("/users", async (GetAllUsersHandler handler) =>
     await handler.Handle(new GetAllUsersRequest()))
     .WithTags("Users")
-    .WithName("GetAllUsers")
-    .WithOpenApi();
+    .WithName("GetAllUsers");
 
 app.MapGet("/users/{id:guid}", async (Guid id, GetUserByIdHandler handler) =>
     await handler.Handle(new GetUserByIdRequest(id)))
     .WithTags("Users")
-    .WithName("GetUserById")
-    .WithOpenApi();
+    .WithName("GetUserById");
 
 app.MapPut("/users/{id:guid}", async (Guid id, UpdateUserRequest command, UpdateUserHandler handler) =>
 {
@@ -235,36 +233,31 @@ app.MapPut("/users/{id:guid}", async (Guid id, UpdateUserRequest command, Update
     return result;
 })
 .WithTags("Users")
-.WithName("UpdateUser")
-.WithOpenApi();
+.WithName("UpdateUser");
 
 app.MapDelete("/users/{id:guid}", async (Guid id, DeleteUserHandler handler) =>
 {
     await handler.Handle(new DeleteUserRequest(id));
 })
 .WithTags("Users")
-.WithName("DeleteUser")
-.WithOpenApi();
+.WithName("DeleteUser");
 
 
 // Menu endpoints
 app.MapPost("/menu", async (CreateMenuItemRequest command, CreateMenuItemHandler handler) => 
     await handler.Handle(command))
     .WithTags("Menu")
-    .WithName("CreateMenuItem")
-    .WithOpenApi();
+    .WithName("CreateMenuItem");
 
 app.MapGet("/menu", async (GetAllMenuItemsHandler handler) => 
     await handler.Handle(new GetAllMenuItemsRequest()))
     .WithTags("Menu")
-    .WithName("GetAllMenuItems")
-    .WithOpenApi();
+    .WithName("GetAllMenuItems");
 
 app.MapGet("/menu/{id:guid}", async (Guid id, GetByIdMenuItemHandler handler) => 
     await handler.Handle(new GetByIdMenuItemRequest(id)))
     .WithTags("Menu")
-    .WithName("GetMenuItemById")
-    .WithOpenApi();
+    .WithName("GetMenuItemById");
 
 app.MapPut("/menu/{id:guid}", async (Guid id, UpdateMenuItemRequest command, UpdateMenuItemHandler handler) =>
 {
@@ -273,8 +266,7 @@ app.MapPut("/menu/{id:guid}", async (Guid id, UpdateMenuItemRequest command, Upd
     return result;
 })
     .WithTags("Menu")
-    .WithName("UpdateMenuItem")
-    .WithOpenApi();
+    .WithName("UpdateMenuItem");
 
 app.MapDelete("/menu/{id:guid}", async (Guid id, DeleteMenuItemHandler handler) => 
     await handler.Handle(new DeleteMenuItemRequest(id)))

@@ -62,5 +62,12 @@ public class CampusEatsContext(DbContextOptions<CampusEatsContext> options) : Db
             entity.Property(ul => ul.UserId).IsRequired();
             entity.HasIndex(ul => ul.UserId).IsUnique();
         });
+        
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(u => u.Id);
+            entity.Property(u => u.Username).IsRequired();
+            entity.HasIndex(u => u.Username).IsUnique();
+        });
     }
 }

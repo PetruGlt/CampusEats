@@ -1,10 +1,3 @@
-/*
- * TODO: 
- * - Frontend integration tests
- * - SonarQube Setup
- * - Migrating Database to PostgreSQL
- * - Deploy
- */
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using CampusEatsUI;
