@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "CampusEatsUI",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-UpgRvLZNKuoi5c6iLo6m9x+vPkGs2vFXHqS+sI1uItI=",
+    "hash": "sha256-1tbdQzTajUILHwq7qjx2VDBgD4klu1kQyXIJHZOL/jc=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -1124,15 +1124,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "CampusEatsUI.wasm",
-        "name": "CampusEatsUI.okudj7qwx8.wasm",
-        "integrity": "sha256-+BQkGSG02FC0iwzZZ3glikWRpcAvmxDxRuufhzdXOgk="
+        "name": "CampusEatsUI.nsaz3pvi1l.wasm",
+        "integrity": "sha256-mYc3TLG/bY3ACdW+N1yc9fhZdzlLuo0C2y13Yh+Hmr8="
       }
     ],
     "pdb": [
       {
         "virtualPath": "CampusEatsUI.pdb",
-        "name": "CampusEatsUI.8r2djjlove.pdb",
-        "integrity": "sha256-NL6TIjhncYpXu66fK97UlvyuEnLU3g3uV0oTjWg1UlA="
+        "name": "CampusEatsUI.lxr2gmwmin.pdb",
+        "integrity": "sha256-F17Q+lfJNFOYnScjF0CS9/B3AdfRU5xgOx+U+0x6tjk="
       }
     ],
     "libraryInitializers": [

@@ -1,0 +1,24 @@
+﻿services:
+  campuseats:
+    image: campuseats
+    build:
+      context: .
+      dockerfile: CampusEats/Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Stripe__SecretKey=${STRIPE_SECRET_KEY}
+      - Stripe__WebhookSecret=${STRIPE_WEBHOOK_SECRET}
+
+  campuseatsui:
+    image: campuseatsui
+    build:
+      context: .
+      dockerfile: CampusEatsUI/Dockerfile
+
+  stripe-cli:
+    image: stripe/stripe-cli
+    command: listen --forward-to http://localhost:5001/webhooks/stripe --api-key ${STRIPE_SECRET_KEY}
+    depends_on:
+      - campuseats
