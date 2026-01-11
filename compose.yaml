@@ -35,7 +35,7 @@
 
   stripe-cli:
     image: stripe/stripe-cli
-    command: listen --forward-to http://localhost:5001/webhooks/stripe --api-key ${STRIPE_SECRET_KEY}
+    command: listen --forward-to http://localhost:5001/api/webhooks/stripe --api-key sk_test_51SlwTGL6QIcjEkyBHU9cfNXLD6EzSLtrzAdidzjafpvrxwPT7kzDipxwbCXjLHPSORAR3z90MnNTgOoTpKE1Cdsm00sTug3UxJ
     depends_on:
       - campuseats
 

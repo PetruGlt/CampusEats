@@ -57,8 +57,8 @@ public class CreatePaymentHandler(CampusEatsContext context)
                 Quantity = item.Quantity
             }).ToList(),
             Mode = "payment",
-            SuccessUrl = string.IsNullOrEmpty(request.SuccessUrl) ? "https://localhost:5001/payment-success" : request.SuccessUrl,
-            CancelUrl = string.IsNullOrEmpty(request.CancelUrl) ? "https://localhost:5001/payment-cancel" : request.CancelUrl,
+            SuccessUrl = string.IsNullOrEmpty(request.SuccessUrl) ? "http://localhost:5000/payment_success" : request.SuccessUrl,
+            CancelUrl = string.IsNullOrEmpty(request.CancelUrl) ? "http://localhost:5000/payment_failure" : request.CancelUrl,
             ClientReferenceId = request.OrderId.ToString(),
             Metadata = new Dictionary<string, string>
             {

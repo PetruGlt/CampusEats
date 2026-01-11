@@ -7,10 +7,11 @@ namespace CampusEatsUI.Services.Payment;
 
 public class PaymentService(HttpClient _http) : IPaymentService
 {
-    public async Task CreateCheckoutSessionAsync(Guid orderId, Guid userId, string successUrl, string cancelUrl)
+    public async Task<PaymentResponse> CreateCheckoutSessionAsync(Guid orderId, Guid userId, string successUrl, string cancelUrl)
     {
         var request = new CreateCheckoutSessionRequest(orderId, userId, successUrl, cancelUrl);
-        await _http.PostAsJsonAsync($"/api/payments/create-checkout", request);
+        var response = await _http.PostAsJsonAsync($"/api/payments/create-checkout", request);
+        return await response.Content.ReadFromJsonAsync<PaymentResponse>();
     }
 
     public async Task<List<PaymentHistoryResponse>> GetPaymentHistoryAsync(string userId, DateTime startDate, DateTime endDate,

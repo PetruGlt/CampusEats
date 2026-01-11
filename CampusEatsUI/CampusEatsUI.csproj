@@ -32,5 +32,12 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\AdminSpace\MenuItemsOrders.razor" />
+      <_ContentIncludedByDefault Remove="Pages\AdminSpace\Payment.razor" />
+      <_ContentIncludedByDefault Remove="Pages\AdminSpace\UserLoyalty.razor" />
+      <_ContentIncludedByDefault Remove="Pages\AdminSpace\Users.razor" />
+    </ItemGroup>
+
 
 </Project>
