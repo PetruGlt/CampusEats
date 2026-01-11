@@ -204,29 +204,29 @@ app.UseHttpsRedirection();
 
 // Auth endpoints
 
-app.MapPost("/auth/register", async (RegisterRequest command, RegisterHandler handler) =>
+app.MapPost("/api/auth/register", async (RegisterRequest command, RegisterHandler handler) =>
         await handler.Handler(command))
     .WithTags("Auth")
     .WithName("Register");
 
-app.MapPost("/auth/login", async (LoginRequest command, LoginHandler handler) =>
+app.MapPost("/api/auth/login", async (LoginRequest command, LoginHandler handler) =>
         await handler.Handle(command))
     .WithTags("Auth")
     .WithName("Login");
 
 // User endpoints
 
-app.MapGet("/users", async (GetAllUsersHandler handler) =>
+app.MapGet("/api/users", async (GetAllUsersHandler handler) =>
     await handler.Handle(new GetAllUsersRequest()))
     .WithTags("Users")
     .WithName("GetAllUsers");
 
-app.MapGet("/users/{id:guid}", async (Guid id, GetUserByIdHandler handler) =>
+app.MapGet("/api/users/{id:guid}", async (Guid id, GetUserByIdHandler handler) =>
     await handler.Handle(new GetUserByIdRequest(id)))
     .WithTags("Users")
     .WithName("GetUserById");
 
-app.MapPut("/users/{id:guid}", async (Guid id, UpdateUserRequest command, UpdateUserHandler handler) =>
+app.MapPut("/api/users/{id:guid}", async (Guid id, UpdateUserRequest command, UpdateUserHandler handler) =>
 {
     var updated = command with { Id = id };
     var result = await handler.Handle(updated);
@@ -235,7 +235,7 @@ app.MapPut("/users/{id:guid}", async (Guid id, UpdateUserRequest command, Update
 .WithTags("Users")
 .WithName("UpdateUser");
 
-app.MapDelete("/users/{id:guid}", async (Guid id, DeleteUserHandler handler) =>
+app.MapDelete("/api/users/{id:guid}", async (Guid id, DeleteUserHandler handler) =>
 {
     await handler.Handle(new DeleteUserRequest(id));
 })
@@ -244,22 +244,22 @@ app.MapDelete("/users/{id:guid}", async (Guid id, DeleteUserHandler handler) =>
 
 
 // Menu endpoints
-app.MapPost("/menu", async (CreateMenuItemRequest command, CreateMenuItemHandler handler) => 
+app.MapPost("/api/menu", async (CreateMenuItemRequest command, CreateMenuItemHandler handler) => 
     await handler.Handle(command))
     .WithTags("Menu")
     .WithName("CreateMenuItem");
 
-app.MapGet("/menu", async (GetAllMenuItemsHandler handler) => 
+app.MapGet("/api/menu", async (GetAllMenuItemsHandler handler) => 
     await handler.Handle(new GetAllMenuItemsRequest()))
     .WithTags("Menu")
     .WithName("GetAllMenuItems");
 
-app.MapGet("/menu/{id:guid}", async (Guid id, GetByIdMenuItemHandler handler) => 
+app.MapGet("/api/menu/{id:guid}", async (Guid id, GetByIdMenuItemHandler handler) => 
     await handler.Handle(new GetByIdMenuItemRequest(id)))
     .WithTags("Menu")
     .WithName("GetMenuItemById");
 
-app.MapPut("/menu/{id:guid}", async (Guid id, UpdateMenuItemRequest command, UpdateMenuItemHandler handler) =>
+app.MapPut("/api/menu/{id:guid}", async (Guid id, UpdateMenuItemRequest command, UpdateMenuItemHandler handler) =>
 {
     var updated = command with { Id = id };
     var result = await handler.Handle(updated);
@@ -268,143 +268,128 @@ app.MapPut("/menu/{id:guid}", async (Guid id, UpdateMenuItemRequest command, Upd
     .WithTags("Menu")
     .WithName("UpdateMenuItem");
 
-app.MapDelete("/menu/{id:guid}", async (Guid id, DeleteMenuItemHandler handler) => 
-    await handler.Handle(new DeleteMenuItemRequest(id)))
+app.MapDelete("/api/menu/{id:guid}", async (Guid id, DeleteMenuItemHandler handler) =>
+        await handler.Handle(new DeleteMenuItemRequest(id)))
     .WithTags("Menu")
-    .WithName("DeleteMenuItem")
-    .WithOpenApi();
+    .WithName("DeleteMenuItem");
 
 // Order endpoints
-app.MapPost("/orders", async (CreateOrderRequest request, CreateOrderHandler handler) =>
-{
-    var result = await handler.Handle(request);
-    return Results.Created($"/orders/{result.Id}", result);
-})
+app.MapPost("/api/orders", async (CreateOrderRequest request, CreateOrderHandler handler) =>
+    {
+        var result = await handler.Handle(request);
+        return Results.Created($"/orders/{result.Id}", result);
+    })
     .WithTags("Orders")
-    .WithName("CreateOrder")
-    .WithOpenApi();
+    .WithName("CreateOrder");
 
-app.MapGet("/orders", async (Guid? userId, GetAllOrdersHandler handler) =>
+app.MapGet("/api/orders", async (Guid? userId, GetAllOrdersHandler handler) =>
 {
     var result = await handler.Handle(new GetAllOrdersRequest(userId));
     return Results.Ok(result);
 })
     .WithTags("Orders")
-    .WithName("GetAllOrders")
-    .WithOpenApi();
+    .WithName("GetAllOrders");
 
-app.MapGet("/orders/{id:guid}", async (Guid id, GetOrderByIdHandler handler) =>
+app.MapGet("/api/orders/{id:guid}", async (Guid id, GetOrderByIdHandler handler) =>
 {
     var result = await handler.Handle(new GetOrderByIdRequest(id));
     return Results.Ok(result);
 })
     .WithTags("Orders")
-    .WithName("GetOrderById")
-    .WithOpenApi();
+    .WithName("GetOrderById");
 
-app.MapPut("/orders/{id:guid}/cancel", async (Guid id, CancelOrderHandler handler) =>
+app.MapPut("/api/orders/{id:guid}/cancel", async (Guid id, CancelOrderHandler handler) =>
 {
     var result = await handler.Handle(new CancelOrderRequest(id));
     return Results.Ok(result);
 })
     .WithTags("Orders")
-    .WithName("CancelOrder")
-    .WithOpenApi();
+    .WithName("CancelOrder");
 
-app.MapGet("/orders/history", async (DateTime? startDate, DateTime? endDate, Guid userId, GetOrderHistoryHandler handler) =>
+app.MapGet("/api/orders/history", async (DateTime? startDate, DateTime? endDate, Guid userId, GetOrderHistoryHandler handler) =>
 {
     var result = await handler.Handle(new GetOrderHistoryRequest(startDate, endDate, userId));
     return Results.Ok(result);
 })
     .WithTags("Orders")
-    .WithName("GetOrderHistory")
-    .WithOpenApi();
+    .WithName("GetOrderHistory");
 
-app.MapGet("/orders/statistics", async (GetOrderStatisticsHandler handler) =>
+app.MapGet("/api/orders/statistics", async (GetOrderStatisticsHandler handler) =>
 {
     var result = await handler.Handle(new GetOrderStatisticsRequest());
     return Results.Ok(result);
 })
     .WithTags("Orders")
-    .WithName("GetOrderStatistics")
-    .WithOpenApi();
+    .WithName("GetOrderStatistics");
 
-app.MapGet("/orders/search", async (string? query, string? status, SearchOrdersHandler handler) =>
+app.MapGet("/api/orders/search", async (string? query, string? status, SearchOrdersHandler handler) =>
 {
     var result = await handler.Handle(new SearchOrdersRequest(query, status));
     return Results.Ok(result);
 })
     .WithTags("Orders")
-    .WithName("SearchOrders")
-    .WithOpenApi();
+    .WithName("SearchOrders");
 
-app.MapGet("/orders/{id:guid}/wait-time", async (Guid id, GetOrderWaitTimeHandler handler) =>
+app.MapGet("/api/orders/{id:guid}/wait-time", async (Guid id, GetOrderWaitTimeHandler handler) =>
 {
     var result = await handler.Handle(new GetOrderWaitTimeRequest(id));
     return Results.Ok(result);
 })
     .WithTags("Orders")
-    .WithName("GetOrderWaitTime")
-    .WithOpenApi();
+    .WithName("GetOrderWaitTime");
 
 // Kitchen endpoints
-app.MapGet("/kitchen/orders", async (GetPendingOrdersHandler handler) =>
+app.MapGet("/api/kitchen/orders", async (GetPendingOrdersHandler handler) =>
 {
     var result = await handler.Handle(new GetPendingOrdersRequest());
     return Results.Ok(result);
 })
     .WithTags("Kitchen")
-    .WithName("GetPendingOrders")
-    .WithOpenApi();
+    .WithName("GetPendingOrders");
 
-app.MapPut("/kitchen/orders/{id:guid}/status", async (Guid id, UpdateOrderStatusRequestBody body, UpdateOrderStatusHandler handler) =>
+app.MapPut("/api/kitchen/orders/{id:guid}/status", async (Guid id, UpdateOrderStatusRequestBody body, UpdateOrderStatusHandler handler) =>
 {
     var request = new UpdateOrderStatusRequest(id, body.Status);
     var result = await handler.Handle(request);
     return Results.Ok(result);
 })
     .WithTags("Kitchen")
-    .WithName("UpdateOrderStatus")
-    .WithOpenApi();
+    .WithName("UpdateOrderStatus");
 
-app.MapGet("/kitchen/dashboard", async (GetKitchenDashboardHandler handler) =>
+app.MapGet("/api/kitchen/dashboard", async (GetKitchenDashboardHandler handler) =>
 {
     var result = await handler.Handle(new GetKitchenDashboardRequest());
     return Results.Ok(result);
 })
     .WithTags("Kitchen")
-    .WithName("GetKitchenDashboard")
-    .WithOpenApi();
+    .WithName("GetKitchenDashboard");
 
-app.MapPut("/kitchen/orders/bulk-update", async (BulkUpdateOrderStatusRequest request, BulkUpdateOrderStatusHandler handler) =>
+app.MapPut("/api/kitchen/orders/bulk-update", async (BulkUpdateOrderStatusRequest request, BulkUpdateOrderStatusHandler handler) =>
 {
     var result = await handler.Handle(request);
     return Results.Ok(result);
 })
     .WithTags("Kitchen")
-    .WithName("BulkUpdateOrderStatus")
-    .WithOpenApi();
+    .WithName("BulkUpdateOrderStatus");
 
-app.MapGet("/kitchen/popular-items", async (int? topN, GetPopularItemsHandler handler) =>
+app.MapGet("/api/kitchen/popular-items", async (int? topN, GetPopularItemsHandler handler) =>
 {
     var result = await handler.Handle(new GetPopularItemsRequest(topN));
     return Results.Ok(result);
 })
     .WithTags("Kitchen")
-    .WithName("GetPopularItems")
-    .WithOpenApi();
+    .WithName("GetPopularItems");
 
 // Payment endpoints
-app.MapPost("/payments/create-checkout", async (CreatePaymentRequest request, CreatePaymentHandler handler) =>
+app.MapPost("/api/payments/create-checkout", async (CreatePaymentRequest request, CreatePaymentHandler handler) =>
 {
     var result = await handler.Handle(request);
     return Results.Ok(result);
 })
     .WithTags("Payment")
-    .WithName("CreateCheckoutSession")
-    .WithOpenApi();
+    .WithName("CreateCheckoutSession");
 
-app.MapGet("/payments/history", async (string userId, DateTime? startDate, DateTime? endDate, string? status, GetPaymentHistoryHandler handler) =>
+app.MapGet("/api/payments/history", async (string userId, DateTime? startDate, DateTime? endDate, string? status, GetPaymentHistoryHandler handler) =>
 {
     PaymentStatus? paymentStatus = null;
     if (!string.IsNullOrEmpty(status) && Enum.TryParse<PaymentStatus>(status, true, out var parsedStatus))
@@ -417,19 +402,17 @@ app.MapGet("/payments/history", async (string userId, DateTime? startDate, DateT
     return Results.Ok(result);
 })
     .WithTags("Payment")
-    .WithName("GetPaymentHistory")
-    .WithOpenApi();
+    .WithName("GetPaymentHistory");
 
-app.MapGet("/payments/{id:guid}", async (Guid id, GetPaymentByIdHandler handler) =>
+app.MapGet("/api/payments/{id:guid}", async (Guid id, GetPaymentByIdHandler handler) =>
 {
     var result = await handler.Handle(new GetPaymentByIdRequest(id));
     return Results.Ok(result);
 })
     .WithTags("Payment")
-    .WithName("GetPaymentById")
-    .WithOpenApi();
+    .WithName("GetPaymentById");
 
-app.MapPost("/webhooks/stripe", async (HttpContext context, HandleStripeWebhook handler) =>
+app.MapPost("/api/webhooks/stripe", async (HttpContext context, HandleStripeWebhook handler) =>
 {
     var json = await new StreamReader(context.Request.Body).ReadToEndAsync();
     var signature = context.Request.Headers["Stripe-Signature"].ToString();
@@ -439,13 +422,12 @@ app.MapPost("/webhooks/stripe", async (HttpContext context, HandleStripeWebhook 
 });
 
 // Loyalty endpoint
-app.MapGet("/loyalty/{userId:guid}", async (Guid userId, GetUserPointsHandler handler) =>
+app.MapGet("/api/loyalty/{userId:guid}", async (Guid userId, GetUserPointsHandler handler) =>
 {
     var result = await handler.Handle(new GetUserPointsRequest(userId));
     return Results.Ok(result);
 })
     .WithTags("Loyalty")
-    .WithName("GetUserLoyaltyPoints")
-    .WithOpenApi();
+    .WithName("GetUserLoyaltyPoints");
 
 app.Run();

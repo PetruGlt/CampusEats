@@ -8,19 +8,18 @@ namespace CampusEatsUI.Services.Auth;
 
 public class AuthenticationService(HttpClient _http, IJSRuntime _jsRuntime) : IAuthenticationService
 {
-    private const string BaseUri = "http://localhost:5168/auth";
     
     public async Task<AuthResponse> LoginAsync(string email, string plainPassword)
     {
         var request = new LoginRequest(email, plainPassword);
-        var response = await _http.PostAsJsonAsync($"{BaseUri}/login", request);
+        var response = await _http.PostAsJsonAsync("/api/auth/login", request);
         return await response.Content.ReadFromJsonAsync<AuthResponse>() ?? new AuthResponse(string.Empty);
     }
 
     public async Task RegisterAsync(string username, string email, string plainPassword)
     {
         var request = new RegisterRequest(username, email, plainPassword);
-        await _http.PostAsJsonAsync($"{BaseUri}/register", request);
+        await _http.PostAsJsonAsync("/api/auth/register", request);
     }
 
     public async Task LogoutAsync()

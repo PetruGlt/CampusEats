@@ -9,23 +9,23 @@ public class MenuService(HttpClient _http) : IMenuService
     public async Task CreateMenuItemAsync(string name, decimal price)
     {
         var request = new CreateMenuItemRequest(name, price);
-        await _http.PostAsJsonAsync("http://localhost:5168/menu", request);
+        await _http.PostAsJsonAsync("/api/menu", request);
     }
 
     public async Task UpdateMenuItemAsync(Guid id, string name, decimal price)
     {
         var request = new UpdateMenuItemRequest(id, name, price);
-        await _http.PutAsJsonAsync($"http://localhost:5168/menu/{id}", request);
+        await _http.PutAsJsonAsync($"/api/menu/{id}", request);
     }
 
     public async Task DeleteMenuItemAsync(Guid id)
     {
-        await _http.DeleteAsync($"http://localhost:5168/menu/{id}");
+        await _http.DeleteAsync($"/api/menu/{id}");
     }
 
     public async Task<List<MenuItem>> GetAllMenuItemsAsync()
     {
-        var items = await _http.GetFromJsonAsync<List<MenuItem>>("http://localhost:5168/menu");
+        var items = await _http.GetFromJsonAsync<List<MenuItem>>("/api/menu");
         return items ?? null;
     }
 

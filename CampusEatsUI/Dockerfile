@@ -1,23 +1,7 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-USER $APP_UID
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+﻿FROM nginx:alpine as final
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["CampusEatsUI/CampusEatsUI.csproj", "CampusEatsUI/"]
-RUN dotnet restore "CampusEatsUI/CampusEatsUI.csproj"
-COPY . .
-WORKDIR "/src/CampusEatsUI"
-RUN dotnet build "./CampusEatsUI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /usr/share/nginx/html/
+COPY --from=publish ../out/wwwroot/ .
+EXPOSE 80
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./CampusEatsUI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CampusEatsUI.dll"]

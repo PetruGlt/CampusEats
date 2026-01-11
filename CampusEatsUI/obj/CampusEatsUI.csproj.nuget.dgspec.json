@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/mrbogdanovich/git/CampusEats/CampusEatsUI/CampusEatsUI.csproj": {}
+    "/src/CampusEatsUI/CampusEatsUI.csproj": {}
   },
   "projects": {
-    "/home/mrbogdanovich/git/CampusEats/CampusEatsUI/CampusEatsUI.csproj": {
+    "/src/CampusEatsUI/CampusEatsUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mrbogdanovich/git/CampusEats/CampusEatsUI/CampusEatsUI.csproj",
+        "projectUniqueName": "/src/CampusEatsUI/CampusEatsUI.csproj",
         "projectName": "CampusEatsUI",
-        "projectPath": "/home/mrbogdanovich/git/CampusEats/CampusEatsUI/CampusEatsUI.csproj",
-        "packagesPath": "/home/mrbogdanovich/.nuget/packages/",
-        "outputPath": "/home/mrbogdanovich/git/CampusEats/CampusEatsUI/obj/",
+        "projectPath": "/src/CampusEatsUI/CampusEatsUI.csproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/src/CampusEatsUI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/mrbogdanovich/.nuget/NuGet/NuGet.Config"
+          "/root/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -51,7 +51,7 @@
             "Microsoft.AspNetCore.App.Internal.Assets": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.0, )",
+              "version": "[10.0.1, )",
               "autoReferenced": true
             },
             "Microsoft.AspNetCore.Components.WebAssembly": {
@@ -70,7 +70,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.0, )",
+              "version": "[10.0.1, )",
               "autoReferenced": true
             },
             "Microsoft.NET.Sdk.WebAssembly.Pack": {
@@ -104,7 +104,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[10.0.0, 10.0.0]"
+              "version": "[10.0.1, 10.0.1]"
             }
           ],
           "frameworkReferences": {
@@ -112,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/mrbogdanovich/.dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
