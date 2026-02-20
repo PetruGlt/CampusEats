@@ -28,7 +28,7 @@ public class SearchOrdersHandlerTests
                 Id = Guid.NewGuid(),
                 UserId = userId1,
                 Status = OrderStatus.Pending,
-                Notes = "Leave at door",
+                Notes = $"Leave at door {userId1}",
                 CreatedAt = DateTime.UtcNow.AddMinutes(-10),
                 Items = new List<OrderItem> 
                 { 
@@ -93,7 +93,6 @@ public class SearchOrdersHandlerTests
         {
             await SeedDatabase(context);
             var handler = new SearchOrdersHandler(context);
-            // Cautam dupa o parte din ID-ul utilizatorului ("jane")
             var request = new SearchOrdersRequest(userId1.ToString(), null); 
 
             // Act

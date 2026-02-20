@@ -75,7 +75,7 @@ public class OrderDetailsUiTests : BunitContext
         cut.Find("button.btn-success").Click();
 
         // Assert
-        Assert.Equal("http://localhost:5159/orders", navMan.Uri);
+        Assert.Equal("http://localhost/orders", navMan.Uri);
     }
 
     [Fact]
